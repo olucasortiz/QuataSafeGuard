@@ -5,21 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Vacina {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idVacina;
-    private String nome;
-    private String lote;
-    private Date validade;
+    private Integer idItem;
+    private Integer qtde;
 
-    @OneToMany(mappedBy = "vacina")
-    private List<CarteiraVacina> carteiraVacinas;
+    @ManyToOne
+    @JoinColumn(name = "produtos_idProduto")
+    private Produto produto;
 }

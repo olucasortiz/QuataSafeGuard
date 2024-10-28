@@ -1,13 +1,28 @@
 package com.quata.quatasafeguardbackend.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Doador {
+    @Id
+    private String cpf;
+    private String nome;
+    private String email;
+    private String telefone;
+    private Integer idade;
+
+    @OneToMany(mappedBy = "doador")
+    private List<Doacao> doacoes;
+
+    @OneToMany(mappedBy = "doador")
+    private List<Recebimento> recebimentos;
 }

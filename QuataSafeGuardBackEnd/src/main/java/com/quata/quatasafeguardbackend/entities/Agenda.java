@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,4 +28,7 @@ public class Agenda {
     @JoinColumn(name = "animal_id")
     private Animal animal;
     //nao precisa dos get e set por causa das anotações la em cima
+
+    @OneToMany(mappedBy = "agenda")
+    private List<EntregarAnimal> entregarAnimais; //depois ver se essa coluna no BD seria necessaria
 }

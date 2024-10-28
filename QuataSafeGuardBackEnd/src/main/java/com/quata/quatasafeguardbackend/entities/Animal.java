@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,4 +21,10 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "tipoAnimal_id")
     private TipoAnimal tipoAnimal;
+
+    @OneToMany(mappedBy = "animal")
+    private List<Agenda> agendas;
+
+    @OneToMany(mappedBy = "animal")
+    private List<CarteiraVacina> carteiraVacinas;
 }

@@ -20,6 +20,4 @@ public class Vacina {
     private String lote;
     private Date validade;
 
-    @OneToMany(mappedBy = "vacina")
-    private List<CarteiraVacina> carteiraVacinas;
 }

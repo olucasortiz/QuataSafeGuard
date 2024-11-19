@@ -1,6 +1,5 @@
 package com.quata.quatasafeguardbackend.entities;
 
-import jakarta.annotation.ManagedBean;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,25 +13,31 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Doacao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long idDoacao;
+
+    @Column(nullable = false)
     private Date data;
+
     private Double valor;
+
     private Integer quantidadeItens;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", referencedColumnName = "idFuncionario")
+    @JoinColumn(name = "funcionario_id", nullable = false)
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name="doador_id", referencedColumnName = "idDoador")
+    @JoinColumn(name = "caixa_id", nullable = true)
+    private Caixa caixa;
+
+    @OneToMany(mappedBy = "doacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> itensDoacao;
+
+    @ManyToOne
+    @JoinColumn(name = "doador_id", nullable = true)
     private Doador doador;
-
-    @OneToMany(mappedBy = "doacao")
-    private List<Funcionario> funcionarios;
-
-    @OneToMany(mappedBy = "animal")
-    private List<Doador> doadores;
 
 }

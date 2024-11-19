@@ -33,4 +33,7 @@ public class Funcionario {
     @OneToMany(mappedBy = "funcionario")
     private List<Recebimento> recebimentos;
 
+    @ManyToOne
+    @JoinColumn(name = "caixa_id")
+    private Caixa caixa;
 }

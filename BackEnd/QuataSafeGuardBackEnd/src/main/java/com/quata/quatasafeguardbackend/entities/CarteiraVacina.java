@@ -27,9 +27,5 @@ public class CarteiraVacina {
     @JoinColumn(name = "vacina_id")
     private Vacina vacina;
 
-    @OneToMany(mappedBy = "carteiraVacina")
-    private List<Animal> animais;
 
-    @OneToMany(mappedBy = "carteiraVacina")
-    private List<Vacina> vacinas;
 }

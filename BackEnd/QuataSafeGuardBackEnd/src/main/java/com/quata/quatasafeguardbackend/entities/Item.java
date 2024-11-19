@@ -18,4 +18,8 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "produtos_idProduto")
     private Produto produto;
+
+    @ManyToOne
+    @JoinColumn(name = "doacao_id")
+    private Doacao doacao;
 }

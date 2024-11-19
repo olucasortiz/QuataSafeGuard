@@ -24,13 +24,13 @@ public class EntregarAnimal {
 
     private String statusEntrega;
 
-    //@ManyToOne
-    //@JoinColumn(name = "Agendar_idAgendar") // Relacionamento com agendamento
-    //private AgendaVisitaAdocao agendamento; tem que ver se essa tabela e necessaria
-
     @ManyToOne
     @JoinColumn(name = "Doador_CPF") // Relacionamento com doador
     private Doador doador;
+
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")
+    private Agenda agenda;
 
     @ManyToOne
     @JoinColumn(name = "Funcionario_idFunc") // Relacionamento com funcionário

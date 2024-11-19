@@ -25,6 +25,8 @@ public class Animal {
     @OneToMany(mappedBy = "animal")
     private List<Agenda> agendas;
 
-    @OneToMany(mappedBy = "animal")
-    private List<CarteiraVacina> carteiraVacinas;
+    @ManyToOne
+    @JoinColumn(name = "carteira_vacina_id")
+    private CarteiraVacina carteiraVacina;
+
 }

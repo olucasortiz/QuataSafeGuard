@@ -1,11 +1,15 @@
 package com.quata.quatasafeguardbackend.controllers;
 
+import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
+import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
 import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
 import com.quata.quatasafeguardbackend.services.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "api/empresa")
@@ -29,6 +33,22 @@ public class EmpresaController {
     public ResponseEntity<Object> updateEmpresa(@RequestBody Empresa empresa) {
         Empresa empresa1 = empresaService.atualizarEmpresa(empresa);
         return ResponseEntity.ok().body(empresa1);
+    }
+
+    @GetMapping("/detalhes")
+    public ResponseEntity<DetalhesEmpresaDTO> obterDetalhesEmpresa() {
+        try {
+            DetalhesEmpresaDTO detalhesEmpresa = empresaService.getDetalhesEmpresa();
+            return ResponseEntity.ok(detalhesEmpresa);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/verifica-param")
+    public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {
+        VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();
+        return ResponseEntity.ok(existe);
     }
 
     @DeleteMapping(value = "delete-empresa/{cnpj}")

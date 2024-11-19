@@ -24,4 +24,5 @@ public class Produto {
 
     @OneToMany(mappedBy = "produto")
     private List<RegistroSaidaItens> registroSaidaItens;
+
 }

@@ -1,5 +1,7 @@
 package com.quata.quatasafeguardbackend.services;
 
+import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
+import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
 import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
 import com.quata.quatasafeguardbackend.repositories.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +77,34 @@ public class EmpresaService {
         return empresaRepository.save(empresaExistente);
     }
 
+    public DetalhesEmpresaDTO getDetalhesEmpresa() {
+        Empresa empresa = empresaRepository.findFirstByOrderByIdDesc();
+        if (empresa == null) {
+            throw new NoSuchElementException("Nenhuma empresa encontrada.");
+        }
+
+        return new DetalhesEmpresaDTO(
+                empresa.getId(),
+                empresa.getNomeFantasia(),
+                empresa.getRazaoSocial(),
+                empresa.getSite(),
+                empresa.getEmail(),
+                empresa.getCnpj(),
+                empresa.getEndereco(),
+                empresa.getBairro(),
+                empresa.getCidade(),
+                empresa.getUf(),
+                empresa.getCep(),
+                empresa.getTelefone(),
+                empresa.getLogoGrande(),
+                empresa.getLogoPequeno(),
+                empresa.getDataCriacao() != null ? empresa.getDataCriacao().toString() : null
+        );
+    }
+
+
+    public VerificaParametrizacaoDTO verificarParametrizacao() {
+        boolean existe = empresaRepository.existsAny();
+        return new VerificaParametrizacaoDTO(existe);
+    }
 }

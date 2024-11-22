@@ -29,7 +29,7 @@ public class ProdutoService {
         return true;
     }
 
-    public Produto alterarProduto(Long id,Produto produto) {
+    public Produto alterarProduto(Long id, Produto produto) {
         Produto prod = this.produtoRepository.findById(id).orElse(null);
         if(prod != null)
         {

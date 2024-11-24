@@ -12,7 +12,7 @@ import lombok.Setter;
 public class RegistroSaidaItens {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRegistroSaidaItens;
+    private Long idRegistroSaidaItens;
     private Integer qtde;
 
     @ManyToOne

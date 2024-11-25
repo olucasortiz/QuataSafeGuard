@@ -37,7 +37,7 @@ function parametrizar(event) {
         logoGrande: document.getElementById("logoGrande").value,
     });
 
-    fetch("http://localhost:8080/api/empresa/parametrizar", {
+    fetch("http://localhost:8080/api/empresa/create-empresa", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

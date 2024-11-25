@@ -13,7 +13,7 @@ function formatarData(data) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("http://localhost:8080/api/empresa/get/profile", {
+    fetch("http://localhost:8080/api/empresa/detalhes", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

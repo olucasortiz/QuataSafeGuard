@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -17,23 +15,14 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nome;
-    private Integer idade;
-
-    @ManyToOne
-    @JoinColumn(name = "tipoAnimal_id")
-    private TipoAnimal tipoAnimal;
-
-    @OneToMany(mappedBy = "animal")
-    private List<Agenda> agendas;
+    private String nome; // Nome do animal
+    private Integer idade; // Idade do animal
+    private String tipo; // Tipo do animal (ex: "Gato", "Cachorro")
 
     @ManyToOne
     @JoinColumn(name = "carteira_vacina_id")
     private CarteiraVacina carteiraVacina;
 
-    @OneToMany(mappedBy = "animal")
-    private List<EntregarAnimal> entregas;
+    private Boolean disponibilidade = true; // Disponível por padrão
 
-    // Novo atributo para disponibilidade
-    private Boolean disponibilidade = true; // Por padrão, o animal está disponível para adoção
 }

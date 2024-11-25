@@ -31,12 +31,17 @@ public class AnimalService {
     }
 
     public Animal atualizarAnimal(Integer id, Animal animalAtualizado) {
-        Animal animal = buscarAnimalPorId(id); // Reutilizar busca existente
+        // Busca o animal existente no banco
+        Animal animal = buscarAnimalPorId(id);
+
+        // Atualiza os campos do animal com os valores fornecidos
         animal.setNome(animalAtualizado.getNome());
         animal.setIdade(animalAtualizado.getIdade());
-        animal.setTipoAnimal(animalAtualizado.getTipoAnimal());
+        animal.setTipo(animalAtualizado.getTipo()); // Atualize o campo "tipo"
         animal.setCarteiraVacina(animalAtualizado.getCarteiraVacina());
         animal.setDisponibilidade(animalAtualizado.getDisponibilidade());
+
+        // Salva o animal atualizado no banco
         return animalRepository.save(animal);
     }
 

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.web.csrf.CsrfToken;
-
 import java.util.List;
 
 @Entity
@@ -24,8 +22,9 @@ public class Funcionario {
     private String login;
     private String senha;
 
+
     @OneToMany(mappedBy = "funcionario")
-    private List<Agenda> agendas;
+    private List<AgendaVisita> visitas; // Novo relacionamento para gerenciar visitas
 
     @OneToMany(mappedBy = "funcionario")
     private List<Doacao> doacoes;

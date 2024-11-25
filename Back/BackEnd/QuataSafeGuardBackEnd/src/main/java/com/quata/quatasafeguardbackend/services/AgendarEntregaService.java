@@ -4,22 +4,13 @@ import com.quata.quatasafeguardbackend.entities.*;
 import com.quata.quatasafeguardbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.io.IOException;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.IOException;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -30,27 +21,41 @@ public class AgendarEntregaService {
     @Autowired
     private DoadorRepository doadorRepository;
 
-    public Agenda agendarEntrega(String cpfDoador, String tipoAnimal, Date dataHora, String informacoes, MultipartFile carteiraVacina) {
-        // Verificar se o CPF existe no banco
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    @Autowired
+    private AgendaRepository agendaRepository;
+
+    public Agenda agendarEntrega(String cpfDoador, String nomeAnimal, Integer idadeAnimal, String tipoAnimal,
+                                 Date dataHora, String informacoes, MultipartFile carteiraVacina) {
+        // Verificar se o CPF do Doador existe no banco
         Optional<Doador> doadorOpt = doadorRepository.findByCpf(cpfDoador);
         if (doadorOpt.isEmpty()) {
             throw new IllegalArgumentException("Doador não encontrado com o CPF informado.");
         }
-
         Doador doador = doadorOpt.get();
+
+        // Criar e salvar o registro do animal
+        Animal animal = new Animal();
+        animal.setNome(nomeAnimal);
+        animal.setIdade(idadeAnimal);
+        animal.setTipo(tipoAnimal);
+        animal.setDisponibilidade(false); // O animal não estará disponível após o agendamento
+        animal = animalRepository.save(animal);
 
         // Salvar a imagem da carteira de vacinação no servidor
         String carteiraPath = salvarCarteiraVacina(carteiraVacina);
 
-        // Criar a Agenda
+        // Criar e salvar o agendamento
         Agenda agenda = new Agenda();
         agenda.setDataHora(dataHora);
         agenda.setMotivo(informacoes);
         agenda.setCarteiraVacinaPath(carteiraPath);
+        agenda.setDoador(doador);
+        agenda.setAnimal(animal);
 
-        // Outros atributos podem ser ajustados aqui...
-
-        return agenda;
+        return agendaRepository.save(agenda);
     }
 
     private String salvarCarteiraVacina(MultipartFile carteiraVacina) {

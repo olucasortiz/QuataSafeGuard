@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -19,18 +18,15 @@ public class Agenda {
     private Integer idAgenda;
 
     private Date dataHora; // Data e hora do agendamento
-    private String motivo; // Motivo do agendamento (ex: consulta, entrega)
+    private String motivo; // Informações adicionais (ex: "Nome do animal")
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id") // Funcionário responsável pelo agendamento
-    private Funcionario funcionario;
+    @JoinColumn(name = "doador_id") // Relacionamento com Doador
+    private Doador doador;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id") // Animal associado ao agendamento
+    @JoinColumn(name = "animal_id") // Relacionamento com Animal
     private Animal animal;
 
-    @OneToMany(mappedBy = "agenda") // Relacionamento com entregas
-    private List<EntregarAnimal> entregarAnimais;
-
-    private String carteiraVacinaPath;
+    private String carteiraVacinaPath; // Caminho da carteira de vacinação
 }

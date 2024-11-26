@@ -1,4 +1,3 @@
-// editarparametrizacao.js
 
 function formatarCnpj(cnpj) {
     return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
@@ -13,36 +12,46 @@ function formatarData(data) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM carregado, iniciando fetch...");
     fetch("http://localhost:8080/api/empresa/detalhes", {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
-        },
+            "Content-Type": "application/json"
+        }
     })
-        .then((response) => response.json())
-        .then((result) => {
-            const empresaProfileSection = document.getElementById("empresaProfile");
-            empresaProfileSection.innerHTML = `
-                <div class="profile-container">
-                    <img src="${result.logoPequeno}" alt="Logo da Empresa" class="logo">
-                    <h2>${result.nomeFantasia}</h2>
-                    <p><strong>Razão Social:</strong> ${result.razaoSocial}</p>
-                    <p><strong>CNPJ:</strong> ${formatarCnpj(result.cnpj)}</p>
-                    <p><strong>Endereço:</strong> ${result.endereco}</p>
-                    <p><strong>Bairro:</strong> ${result.bairro}</p>
-                    <p><strong>Cidade:</strong> ${result.cidade}</p>
-                    <p><strong>UF:</strong> ${result.uf}</p>
-                    <p><strong>Telefone:</strong> ${result.telefone}</p>
-                    <p><strong>Site:</strong> ${result.site}</p>
-                    <p><strong>Data de Criação:</strong> ${formatarData(result.dataCriacao)}</p>
-                    <button onclick="editarParametrizacao(${result.id})">Editar Parametrização</button>
-                </div>`;
+        .then((response) => {
+            console.log("Resposta bruta do backend:", response);
+            return response.json();
         })
-        .catch((error) => console.error("Erro ao carregar perfil:", error));
+        .then((result) => {
+            console.log("Dados recebidos do backend:", result);
+            if (result) {
+                document.getElementById("nomeFantasia").value = result.nomeFantasia || "";
+                document.getElementById("razaoSocial").value = result.razaoSocial || "";
+                document.getElementById("cnpj").value = result.cnpj || "";
+                document.getElementById("endereco").value = result.endereco || "";
+                document.getElementById("bairro").value = result.bairro || "";
+                document.getElementById("cidade").value = result.cidade || "";
+                document.getElementById("uf").value = result.uf || "";
+                document.getElementById("telefone").value = result.telefone || "";
+                document.getElementById("site").value = result.site || "";
+                document.getElementById("email").value = result.email || "";
+                document.getElementById("cep").value = result.cep || "";
+                document.getElementById("dataCriacao").value = result.dataCriacao
+                    ? new Date(result.dataCriacao).toISOString().split("T")[0]
+                    : "";
+                document.getElementById("logoPequeno").value = result.logoPequeno || "";
+                document.getElementById("logoGrande").value = result.logoGrande || "";
+            } else {
+                console.error("Nenhum dado encontrado.");
+            }
+        })
+        .catch((error) => console.error("Erro ao carregar os dados:", error));
 });
 
+
 function editarParametrizacao(id) {
-    fetch(`http://localhost:8080/api/empresa/get/${id}`, {
+    fetch(`http://localhost:8080/api/empresa/get-empresa/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -51,6 +60,9 @@ function editarParametrizacao(id) {
         .then((response) => response.json())
         .then((result) => {
             const empresaProfileSection = document.getElementById("empresaProfile");
+            const dataCriacao = result.dataCriacao
+                ? new Date(result.dataCriacao).toISOString().split("T")[0]
+                : "";
             empresaProfileSection.innerHTML = `
                 <form onsubmit="atualizarParametrizacao(event)">
                     <input type="text" id="nomeFantasia" value="${result.nomeFantasia}" required>
@@ -62,6 +74,7 @@ function editarParametrizacao(id) {
                     <input type="text" id="uf" value="${result.uf}" maxlength="2">
                     <input type="text" id="telefone" value="${result.telefone}">
                     <input type="text" id="site" value="${result.site}">
+                    <input type="date" id="dataCriacao" value="${result.dataCriacao}">
                     <input type="text" id="logoPequeno" value="${result.logoPequeno}">
                     <input type="text" id="logoGrande" value="${result.logoGrande}">
                     <button type="submit">Salvar</button>
@@ -83,11 +96,12 @@ function atualizarParametrizacao(event) {
         uf: document.getElementById("uf").value,
         telefone: document.getElementById("telefone").value,
         site: document.getElementById("site").value,
+        dataCriacao: document.getElementById("dataCriacao").value,
         logoPequeno: document.getElementById("logoPequeno").value,
         logoGrande: document.getElementById("logoGrande").value,
     });
 
-    fetch("http://localhost:8080/api/empresa/update", {
+    fetch("http://localhost:8080/api/empresa/update-empresa", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -57,8 +58,8 @@ public class Empresa {
     @Column(name = "logo_pequeno")
     private String logoPequeno;
 
-    @Column(name = "data_criacao", nullable = true)
-    private LocalDateTime dataCriacao;
+    @Column(name = "data_criacao", nullable = false)
+    private LocalDate dataCriacao;
 
     public static boolean isCNPJ(String cnpj) {
         if (cnpj == null || cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {//regex par a verificar se os digitos sao sequenciais

@@ -4,7 +4,7 @@ function validateLogin(event) {
     const password = document.getElementById("password").value;
 
     if (email === "admin" && password === "admin") {
-        fetch('http://localhost:8080/api/empresa/existe-param', { method: 'GET' })
+        fetch('http://localhost:8080/api/empresa/verifica-parametrizacao', { method: 'GET' })
             .then((response) => response.json())
             .then((result) => {
                 const { existe } = result;
@@ -33,9 +33,15 @@ function parametrizar(event) {
         uf: document.getElementById("uf").value,
         telefone: document.getElementById("telefone").value,
         site: document.getElementById("site").value,
+        email: document.getElementById("email").value,
+        cep: document.getElementById("cep").value,
+        dataCriacao: document.getElementById("dataCriacao").value,
         logoPequeno: document.getElementById("logoPequeno").value,
         logoGrande: document.getElementById("logoGrande").value,
     });
+    
+
+    console.log("Dados enviados:", empresa);
 
     fetch("http://localhost:8080/api/empresa/create-empresa", {
         method: "POST",
@@ -52,5 +58,6 @@ function parametrizar(event) {
                 throw new Error("Erro ao salvar parametrização");
             }
         })
-        .catch((error) => alert("Erro ao salvar dados: " + error.message));
+        .catch((error) => console.error("Erro ao salvar dados:", error));
 }
+

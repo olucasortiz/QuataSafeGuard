@@ -46,7 +46,7 @@ public class EmpresaController {
         }
     }
 
-    @GetMapping("/verifica-param")
+    @GetMapping("/verifica-parametrizacao")
     public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {
         VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();
         return ResponseEntity.ok(existe);

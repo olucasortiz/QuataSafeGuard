@@ -19,44 +19,43 @@
     <!-- Conteúdo Principal -->
     <main class="container-entrega">
         <h1>Entrega de Animais</h1>
+        
+
+
+        <!-- Filtro de busca -->
         <section>
-            <form id="form-entrega" class="form-entrega">
-                <h2>Registrar Entrega</h2>
+            <h2>Filtrar Entregas</h2>
+            <form id="form-filtro" class="form-filtro">
                 <div>
-                    <label for="animal-id">ID do Animal:</label>
-                    <input type="number" id="animal-id" name="animalId" placeholder="Digite o ID do animal" required>
+                    <label for="filtro-data">Data da Entrega:</label>
+                    <input type="date" id="filtro-data" name="dataEntrega">
                 </div>
                 <div>
-                    <label for="funcionario-id">ID do Funcionário:</label>
-                    <input type="number" id="funcionario-id" name="funcionarioId" placeholder="Digite o ID do funcionário" required>
+                    <label for="filtro-animal-id">ID do Animal:</label>
+                    <input type="number" id="filtro-animal-id" name="animalId" placeholder="Digite o ID do animal">
                 </div>
-                <div>
-                    <label for="agenda-id">ID da Agenda:</label>
-                    <input type="number" id="agenda-id" name="agendaId" placeholder="Digite o ID da agenda" required>
-                </div>
-                <button type="submit" class="btn-entrega">Registrar Entrega</button>
+                <button type="submit" class="btn-filtro">Filtrar</button>
             </form>
         </section>
-
-        <section>
-            <h2>Entregas Pendentes</h2>
-            <table id="tabela-entregas" class="table-entrega">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID do Animal</th>
-                        <th>Data</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Entregas pendentes serão carregadas aqui -->
-                </tbody>
-            </table>
-        </section>
+                <!-- Tabela de entregas pendentes -->
+                <section>
+                    <h2>Entregas Pendentes</h2>
+                    <table id="tabela-entregas" class="table-entrega">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ID do Animal</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados das entregas pendentes serão carregados aqui -->
+                        </tbody>
+                    </table>
+                </section>
     </main>
-
 
     <script src="js/EntregarAnimal.js"></script>
 </body>

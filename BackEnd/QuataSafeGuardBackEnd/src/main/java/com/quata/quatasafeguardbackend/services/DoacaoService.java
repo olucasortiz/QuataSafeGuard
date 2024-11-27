@@ -20,7 +20,7 @@ public class DoacaoService {
     private ProdutoRepository produtoRepository;
 
     //lucas ortiz - registrar doacao recursos
-    public Doacao registrarDoacao(Doacao doacao) {
+    public Doacao receberDoacaoDeRecursos(Doacao doacao) {
         if (doacao.getItensDoacao() == null || doacao.getItensDoacao().isEmpty()) {
             throw new IllegalArgumentException("A doação deve conter pelo menos um item.");
         }

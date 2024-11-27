@@ -21,9 +21,9 @@ public class DoacaoController {
 
     //lucas ortiz
     @PostMapping
-    public ResponseEntity<Doacao> registrarDoacao(@RequestBody Doacao doacao) {
+    public ResponseEntity<Doacao> receberDoacaoDeRecursos(@RequestBody Doacao doacao) {
         try {
-            Doacao novaDoacao = doacaoService.registrarDoacao(doacao);
+            Doacao novaDoacao = doacaoService.receberDoacaoDeRecursos(doacao);
             return ResponseEntity.ok(novaDoacao);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);

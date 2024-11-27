@@ -1,5 +1,6 @@
 package com.quata.quatasafeguardbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idFuncionario;
+    private Long idFuncionario;
     private String nome;
     private String cpf;
     private String cargo;
@@ -28,6 +29,7 @@ public class Funcionario {
     private List<Agenda> agendas;
 
     @OneToMany(mappedBy = "funcionario")
+    @JsonIgnore
     private List<Doacao> doacoes;
 
     @OneToMany(mappedBy = "funcionario")

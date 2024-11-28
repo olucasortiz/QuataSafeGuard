@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.quata.quatasafeguardbackend.entities.Produto;
 import com.quata.quatasafeguardbackend.services.ProdutoService;
+
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/produto")
 public class ProdutoController {
@@ -37,5 +40,16 @@ public class ProdutoController {
         } else {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Erro ao excluir produto");
         }
+    }
+
+    @GetMapping(value = "get-all-produto")
+    public ResponseEntity<List<Produto>> getAllProdutos() {
+        List<Produto> produtos = produtoService.getAllProdutos();
+
+        if (produtos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        return ResponseEntity.ok(produtos);
     }
 }

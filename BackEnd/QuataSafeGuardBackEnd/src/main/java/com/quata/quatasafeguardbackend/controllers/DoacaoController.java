@@ -19,6 +19,7 @@ public class DoacaoController {
     //lucas ortiz
     @PostMapping
     public ResponseEntity<Doacao> receberDoacaoDeRecursos(@RequestBody Doacao doacao) {
+        System.out.println("Recebendo doação: " + doacao);
         try {
             Doacao novaDoacao = doacaoService.receberDoacaoDeRecursos(doacao);
             return ResponseEntity.ok(novaDoacao);

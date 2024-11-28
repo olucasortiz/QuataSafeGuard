@@ -14,6 +14,7 @@ public class RegistroSaidaItens {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRegistroSaidaItens;
     private Integer qtde;
+    private String motivo;
 
     @ManyToOne
     @JoinColumn(name = "produtos_idProduto")

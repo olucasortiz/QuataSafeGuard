@@ -1,48 +1,90 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Quando a página carregar, chama a função para carregar os produtos e o histórico de saídas
+document.addEventListener("DOMContentLoaded", function() {
     carregarProdutos();
+    carregarHistoricoSaidas();
 });
 
+// Função para carregar os produtos disponíveis no estoque
 function carregarProdutos() {
-    fetch("http://localhost:8080/api/estoque", {
+    fetch("http://localhost:8080/api/produto/get-all-produto", {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     })
-        .then(response => response.json())
-        .then(data => {
-            const estoqueContainer = document.getElementById("estoqueContainer");
-            estoqueContainer.innerHTML = data.map(produto => `
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">${produto.nome}</h5>
-                        <p class="card-text">Quantidade disponível: ${produto.quantidadeEstoque}</p>
-                        <input type="number" id="quantidade-${produto.id}" class="form-control mb-2" placeholder="Quantidade a retirar">
-                        <button class="btn btn-danger" onclick="registrarSaida(${produto.id})">Registrar Saída</button>
-                    </div>
-                </div>
-            `).join("");
-        })
-        .catch(error => console.error("Erro ao carregar estoque:", error));
+    .then(response => response.json())
+    .then(data => {
+        const produtoSelect = document.getElementById("produto");
+
+        if (Array.isArray(data)) {
+            data.forEach(produto => {
+                const option = document.createElement("option");
+                option.value = produto.idProduto;
+                option.textContent = `${produto.nomeProduto} (${produto.quantidadeEstoque} disponíveis)`;
+                produtoSelect.appendChild(option);
+            });
+        } else {
+            console.error("Erro: Dados não são um array", data);
+        }
+    })
+    .catch(error => {
+        console.error("Erro ao carregar produtos:", error);
+    });
 }
 
-function registrarSaida(id) {
-    const quantidade = document.getElementById(`quantidade-${id}`).value;
+// Função para registrar a saída de estoque
+document.getElementById("saidaForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-    if (!quantidade || quantidade <= 0) {
-        alert("Por favor, insira uma quantidade válida.");
+    const produtoId = document.getElementById("produto").value;
+    const quantidade = document.getElementById("quantidade").value;
+    const motivo = document.getElementById("motivo").value;
+
+    // Validação simples
+    if (!produtoId || !quantidade || quantidade <= 0 || !motivo) {
+        alert("Por favor, preencha todos os campos corretamente.");
         return;
     }
 
-    fetch("http://localhost:8080/api/saida-estoque/saida", {
+    const url = `http://localhost:8080/api/saida-estoque?idProduto=${produtoId}&quantidade=${quantidade}&motivo=${motivo}`;
+
+    fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            produtoId: id,
-            quantidade: parseInt(quantidade, 10)
-        })
+        headers: { "Content-Type": "application/json" }
     })
-        .then(() => {
-            alert("Saída registrada com sucesso!");
-            carregarProdutos();
-        })
-        .catch(error => alert("Erro ao registrar saída: " + error.message));
+    .then(response => response.json())
+    .then(result => {
+        alert("Saída de estoque registrada com sucesso!");
+        document.getElementById("saidaForm").reset();
+        carregarHistoricoSaidas();  // Atualiza o histórico de saídas
+    })
+    .catch(error => {
+        alert("Erro ao registrar saída de estoque: " + error.message);
+    });
+});
+
+// Função para carregar o histórico de saídas de estoque
+function carregarHistoricoSaidas() {
+    fetch("http://localhost:8080/api/saida-estoque", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tabela = document.getElementById("historicoTabela").getElementsByTagName('tbody')[0];
+
+        // Limpa a tabela antes de inserir novos dados
+        tabela.innerHTML = '';
+
+        data.forEach(saida => {
+            const row = tabela.insertRow();
+
+            row.insertCell(0).textContent = saida.produto.idProduto;
+            row.insertCell(1).textContent = saida.produto.nomeProduto;
+            row.insertCell(2).textContent = saida.quantidade;
+            row.insertCell(3).textContent = saida.motivo || "Sem motivo";
+            row.insertCell(4).textContent = saida.dataSaida;
+        });
+    })
+    .catch(error => {
+        console.error("Erro ao carregar histórico de saídas:", error);
+    });
 }

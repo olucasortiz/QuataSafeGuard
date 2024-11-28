@@ -1,5 +1,6 @@
 package com.quata.quatasafeguardbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,8 @@ public class Produto {
     private String descricaoProduto;
     private Integer quantidadeEstoque;
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Item> itens;
 
     @OneToMany(mappedBy = "produto")

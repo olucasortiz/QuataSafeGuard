@@ -15,6 +15,34 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    public Produto atualizarEstoque(Long idProduto, Integer quantidade) {
+        Produto produto = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+
+        // Atualizando a quantidade no estoque
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);
+        return produtoRepository.save(produto);
+    }
+
+    public Produto reduzirEstoque(Long idProduto, Integer quantidade) {
+        Produto produto = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+
+        if (produto.getQuantidadeEstoque() < quantidade) {
+            throw new IllegalArgumentException("Estoque insuficiente para a saída.");
+        }
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidade);
+        return produtoRepository.save(produto);
+    }
+
+    public Produto adicionarEstoque(Long idProduto, Integer quantidade) {
+        Produto produto = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);
+        return produtoRepository.save(produto);
+    }
+
     public Produto saveProduto(Produto produto) {
         return produtoRepository.save(produto);
     }

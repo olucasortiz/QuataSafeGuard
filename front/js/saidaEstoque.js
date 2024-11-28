@@ -1,7 +1,7 @@
 // Quando a página carregar, chama a função para carregar os produtos e o histórico de saídas
 document.addEventListener("DOMContentLoaded", function() {
-    carregarProdutos();
-    carregarHistoricoSaidas();
+    carregarProdutos();   // Carrega a lista de produtos no estoque
+    carregarHistoricoSaidas(); // Carrega o histórico de saídas de estoque
 });
 
 // Função para carregar os produtos disponíveis no estoque
@@ -14,6 +14,7 @@ function carregarProdutos() {
     .then(data => {
         const produtoSelect = document.getElementById("produto");
 
+        // Verifica se a resposta é um array
         if (Array.isArray(data)) {
             data.forEach(produto => {
                 const option = document.createElement("option");
@@ -74,6 +75,7 @@ function carregarHistoricoSaidas() {
         // Limpa a tabela antes de inserir novos dados
         tabela.innerHTML = '';
 
+        // Insere as novas linhas na tabela com o histórico de saídas
         data.forEach(saida => {
             const row = tabela.insertRow();
 

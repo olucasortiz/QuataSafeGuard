@@ -1,5 +1,6 @@
 package com.quata.quatasafeguardbackend.services;
 
+import com.quata.quatasafeguardbackend.ValidadorDeCnpj;
 import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
 import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
 import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
@@ -13,6 +14,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class EmpresaService {
+    //lucas ortiz
     @Autowired
     private EmpresaRepository empresaRepository;
 
@@ -21,24 +23,22 @@ public class EmpresaService {
                 .orElseThrow(() -> new NoSuchElementException("A empresa não foi encontrada"));
     }
 
+
     public Optional<Empresa> getEmpresaByCnpj(String cnpj) {
         return empresaRepository.findByCnpj(cnpj);
     }
 
     public Empresa saveEmpresa(Empresa empresa) {
-        if (empresaRepository.existsAny()) {
-            throw new IllegalStateException("A parametrização já foi realizada.");
-        }
+        System.out.println("Recebendo empresa: " + empresa);
         if (!Empresa.isCNPJ(empresa.getCnpj())) {
             throw new IllegalArgumentException("CNPJ inválido.");
         }
-        Optional<Empresa> empresaExistente = getEmpresaByCnpj(empresa.getCnpj());
-        if (empresaExistente.isPresent()) {
-            throw new IllegalStateException("Uma empresa com este CNPJ já existe: " + Empresa.imprimeCNPJ(empresa.getCnpj()));
+        if (empresa.getEmail() == null || empresa.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("O campo email é obrigatório.");
         }
-        empresa.setDataCriacao(LocalDateTime.now());
         return empresaRepository.save(empresa);
     }
+
 
     public boolean deleteEmpresa(String cnpj) {
         Optional<Empresa> empresa = getEmpresaByCnpj(cnpj);

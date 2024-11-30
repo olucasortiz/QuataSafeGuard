@@ -1,4 +1,4 @@
-package com.quata.quatasafeguardbackend.config;
+package com.quata.quatasafeguardbackend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

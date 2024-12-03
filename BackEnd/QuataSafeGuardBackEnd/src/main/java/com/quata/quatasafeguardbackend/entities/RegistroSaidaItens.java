@@ -2,6 +2,7 @@ package com.quata.quatasafeguardbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,9 @@ public class RegistroSaidaItens {
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataSaida;
-    @JsonBackReference
-    @ManyToOne
+
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "produtos_idProduto")
     private Produto produto;
 

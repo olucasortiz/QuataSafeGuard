@@ -74,4 +74,5 @@ public class RegistroSaidaItensController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

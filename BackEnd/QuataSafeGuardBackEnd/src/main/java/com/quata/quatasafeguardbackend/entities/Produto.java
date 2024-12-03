@@ -1,5 +1,6 @@
 package com.quata.quatasafeguardbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,7 +25,7 @@ public class Produto {
     @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Item> itens;
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "produto")
     private List<RegistroSaidaItens> registroSaidaItens;
 

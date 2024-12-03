@@ -21,7 +21,9 @@ public class Item {
     @JsonBackReference
     private Produto produto;
 
+
     @ManyToOne
-    @JoinColumn(name = "doacao_id")
+    @JoinColumn(name = "doacao_id", nullable = false)
+    @JsonBackReference("doacao-itens")
     private Doacao doacao;
 }

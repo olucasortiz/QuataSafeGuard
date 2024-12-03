@@ -1,34 +1,32 @@
 package com.quata.quatasafeguardbackend.entities;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Agenda {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAgenda;
-    private Date dataHora;
-    private String motivo;
+
+    private Date dataHora; // Data e hora do agendamento
+    private String motivo; // Informações adicionais (ex: "Nome do animal")
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionario;
+    @JoinColumn(name = "doador_id") // Relacionamento com Doador
+    private Doador doador;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id")
+    @JoinColumn(name = "animal_id") // Relacionamento com Animal
     private Animal animal;
-    //nao precisa dos get e set por causa das anotações la em cima
 
-    @OneToMany(mappedBy = "agenda")
-    private List<EntregarAnimal> entregarAnimais; //depois ver se essa coluna no BD seria necessaria
+    private String carteiraVacinaPath; // Caminho da carteira de vacinação
 }

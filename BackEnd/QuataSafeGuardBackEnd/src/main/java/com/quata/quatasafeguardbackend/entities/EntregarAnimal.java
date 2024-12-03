@@ -1,8 +1,5 @@
 package com.quata.quatasafeguardbackend.entities;
 
-import com.quata.quatasafeguardbackend.entities.AgendaVisitaAdocao;
-import com.quata.quatasafeguardbackend.entities.Doador;
-import com.quata.quatasafeguardbackend.entities.Funcionario;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +22,18 @@ public class EntregarAnimal {
     private String statusEntrega;
 
     @ManyToOne
-    @JoinColumn(name = "Doador_CPF") // Relacionamento com doador
+    @JoinColumn(name = "doador_cpf") // Relacionamento com doador
     private Doador doador;
 
     @ManyToOne
-    @JoinColumn(name = "agenda_id")
+    @JoinColumn(name = "agenda_id") // Relacionamento com agenda
     private Agenda agenda;
 
     @ManyToOne
-    @JoinColumn(name = "Funcionario_idFunc") // Relacionamento com funcionário
+    @JoinColumn(name = "funcionario_id") // Relacionamento com funcionário
     private Funcionario funcionario;
+
+    @ManyToOne
+    @JoinColumn(name = "animal_id") // Relacionamento com animal
+    private Animal animal; // Associar o animal que está sendo entregue
 }

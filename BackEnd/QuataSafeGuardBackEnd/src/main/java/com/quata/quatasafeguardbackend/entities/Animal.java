@@ -5,28 +5,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Animal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private Integer idade;
 
-    @ManyToOne
-    @JoinColumn(name = "tipoAnimal_id")
-    private TipoAnimal tipoAnimal;
+    private String nome; // Nome do animal
+    private Integer idade; // Idade do animal
+    private String tipo; // Tipo do animal (ex: "Gato", "Cachorro")
+    private char sexo; // Sexo do animal (ex: "M", "F")
+    private LocalDate data_nascimento; // Data de nascimento do animal
 
-    @OneToMany(mappedBy = "animal")
-    private List<Agenda> agendas;
-
-    @ManyToOne
-    @JoinColumn(name = "carteira_vacina_id")
-    private CarteiraVacina carteiraVacina;
+    private Boolean disponibilidade = true; // Disponível por padrão
 
 }

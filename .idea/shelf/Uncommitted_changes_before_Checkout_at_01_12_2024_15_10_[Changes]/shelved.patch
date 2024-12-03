@@ -1,0 +1,551 @@
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.services;\r\n\r\nimport com.quata.quatasafeguardbackend.entities.Produto;\r\nimport com.quata.quatasafeguardbackend.repositories.ProdutoRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.List;\r\nimport java.util.NoSuchElementException;\r\n\r\n\r\n@Service\r\npublic class ProdutoService {\r\n\r\n    @Autowired\r\n    private ProdutoRepository produtoRepository;\r\n\r\n    public Produto atualizarEstoque(Long idProduto, Integer quantidade) {\r\n        Produto produto = produtoRepository.findById(idProduto)\r\n                .orElseThrow(() -> new NoSuchElementException(\"Produto não encontrado.\"));\r\n\r\n        // Atualizando a quantidade no estoque\r\n        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);\r\n        return produtoRepository.save(produto);\r\n    }\r\n\r\n    public Produto reduzirEstoque(Long idProduto, Integer quantidade) {\r\n        Produto produto = produtoRepository.findById(idProduto)\r\n                .orElseThrow(() -> new NoSuchElementException(\"Produto não encontrado.\"));\r\n\r\n        if (produto.getQuantidadeEstoque() < quantidade) {\r\n            throw new IllegalArgumentException(\"Estoque insuficiente para a saída.\");\r\n        }\r\n        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidade);\r\n        return produtoRepository.save(produto);\r\n    }\r\n\r\n    public Produto adicionarEstoque(Long idProduto, Integer quantidade) {\r\n        Produto produto = produtoRepository.findById(idProduto)\r\n                .orElseThrow(() -> new NoSuchElementException(\"Produto não encontrado.\"));\r\n\r\n        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);\r\n        return produtoRepository.save(produto);\r\n    }\r\n\r\n    public Produto saveProduto(Produto produto) {\r\n        return produtoRepository.save(produto);\r\n    }\r\n\r\n    public boolean deleteProduto(Long id) {\r\n        try {\r\n            produtoRepository.deleteById(id);\r\n        } catch (Exception e)\r\n        {\r\n            return false;\r\n        }\r\n        return true;\r\n    }\r\n\r\n    public Produto alterarProduto(Long id,Produto produto) {\r\n        Produto prod = this.produtoRepository.findById(id).orElse(null);\r\n        if(prod != null)\r\n        {\r\n            prod.setNomeProduto(produto.getNomeProduto());\r\n            prod.setDescricaoProduto(produto.getDescricaoProduto());\r\n            prod.setItens(produto.getItens());\r\n            prod.setQuantidadeEstoque(produto.getQuantidadeEstoque());\r\n            prod.setRegistroSaidaItens(produto.getRegistroSaidaItens());\r\n            return produtoRepository.save(prod);\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public Produto getByIdProduto (Long id) {\r\n        return produtoRepository.findById(id).orElseThrow(()-> new NoSuchElementException(\"Não encontrado\"));\r\n    }\r\n\r\n    public List<Produto> getAllProdutos() {\r\n        return produtoRepository.findAll();\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java	
+@@ -15,34 +15,6 @@
+     @Autowired
+     private ProdutoRepository produtoRepository;
+ 
+-    public Produto atualizarEstoque(Long idProduto, Integer quantidade) {
+-        Produto produto = produtoRepository.findById(idProduto)
+-                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+-
+-        // Atualizando a quantidade no estoque
+-        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);
+-        return produtoRepository.save(produto);
+-    }
+-
+-    public Produto reduzirEstoque(Long idProduto, Integer quantidade) {
+-        Produto produto = produtoRepository.findById(idProduto)
+-                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+-
+-        if (produto.getQuantidadeEstoque() < quantidade) {
+-            throw new IllegalArgumentException("Estoque insuficiente para a saída.");
+-        }
+-        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidade);
+-        return produtoRepository.save(produto);
+-    }
+-
+-    public Produto adicionarEstoque(Long idProduto, Integer quantidade) {
+-        Produto produto = produtoRepository.findById(idProduto)
+-                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado."));
+-
+-        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidade);
+-        return produtoRepository.save(produto);
+-    }
+-
+     public Produto saveProduto(Produto produto) {
+         return produtoRepository.save(produto);
+     }
+@@ -57,7 +29,7 @@
+         return true;
+     }
+ 
+-    public Produto alterarProduto(Long id,Produto produto) {
++    public Produto alterarProduto(Long id, Produto produto) {
+         Produto prod = this.produtoRepository.findById(id).orElse(null);
+         if(prod != null)
+         {
+@@ -78,4 +50,5 @@
+     public List<Produto> getAllProdutos() {
+         return produtoRepository.findAll();
+     }
++
+ }
+Index: BackEnd/QuataSafeGuardBackEnd/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <parent>\r\n        <groupId>org.springframework.boot</groupId>\r\n        <artifactId>spring-boot-starter-parent</artifactId>\r\n        <version>3.3.5</version>\r\n        <relativePath/> <!-- lookup parent from repository -->\r\n    </parent>\r\n    <groupId>com.quata</groupId>\r\n    <artifactId>QuataSafeGuardBackEnd</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>QuataSafeGuardBackEnd</name>\r\n    <description>QuataSafeGuardBackEnd</description>\r\n    <url/>\r\n    <licenses>\r\n        <license/>\r\n    </licenses>\r\n    <developers>\r\n        <developer/>\r\n    </developers>\r\n    <scm>\r\n        <connection/>\r\n        <developerConnection/>\r\n        <tag/>\r\n        <url/>\r\n    </scm>\r\n    <properties>\r\n        <java.version>21</java.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-security</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-validation</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web-services</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.postgresql</groupId>\r\n            <artifactId>postgresql</artifactId>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.security</groupId>\r\n            <artifactId>spring-security-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n            <scope>provided</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/pom.xml b/BackEnd/QuataSafeGuardBackEnd/pom.xml
+--- a/BackEnd/QuataSafeGuardBackEnd/pom.xml	
++++ b/BackEnd/QuataSafeGuardBackEnd/pom.xml	
+@@ -42,7 +42,6 @@
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-validation</artifactId>
+         </dependency>
+-
+         <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-web</artifactId>
+@@ -83,4 +82,4 @@
+         </plugins>
+     </build>
+ 
+-</project>
+\ No newline at end of file
++</project>
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ProdutoController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.controllers;\r\n\r\nimport org.springframework.web.bind.annotation.*;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport com.quata.quatasafeguardbackend.entities.Produto;\r\nimport com.quata.quatasafeguardbackend.services.ProdutoService;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(value = \"api/produto\")\r\npublic class ProdutoController {\r\n    @Autowired\r\n    private ProdutoService produtoService;\r\n\r\n    @GetMapping(value = \"get-produto/{id}\")\r\n    public ResponseEntity<Produto> getProduto(@PathVariable Long id) {\r\n        Produto produto = produtoService.getByIdProduto(id);\r\n        return ResponseEntity.ok().body(produto);\r\n    }\r\n\r\n    @PostMapping(value = \"create-produto\")\r\n    public ResponseEntity<Object> createProduto(@RequestBody Produto produto) {\r\n        Produto produto1 = produtoService.saveProduto(produto);\r\n        return ResponseEntity.ok().body(produto1);\r\n    }\r\n\r\n    @PutMapping(value=\"update-produto\")\r\n    public ResponseEntity<Object> updateProduto(@RequestBody Produto produto) {\r\n        Produto produto1 = produtoService.alterarProduto(produto.getIdProduto(), produto);\r\n        return ResponseEntity.ok().body(produto1);\r\n    }\r\n\r\n    @DeleteMapping(value = \"delete-produto/{id}\")\r\n    public ResponseEntity<Object> deleteProduto(@PathVariable Long id) {\r\n        if (produtoService.deleteProduto(id)) {\r\n            return ResponseEntity.ok().body(\"Produto excluído com sucesso\");\r\n        } else {\r\n            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(\"Erro ao excluir produto\");\r\n        }\r\n    }\r\n\r\n    @GetMapping(value = \"get-all-produto\")\r\n    public ResponseEntity<List<Produto>> getAllProdutos() {\r\n        List<Produto> produtos = produtoService.getAllProdutos();\r\n\r\n        if (produtos.isEmpty()) {\r\n            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();\r\n        }\r\n\r\n        return ResponseEntity.ok(produtos);\r\n    }\r\n}
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ProdutoController.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ProdutoController.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ProdutoController.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ProdutoController.java	
+@@ -7,8 +7,6 @@
+ import com.quata.quatasafeguardbackend.entities.Produto;
+ import com.quata.quatasafeguardbackend.services.ProdutoService;
+ 
+-import java.util.List;
+-
+ @RestController
+ @RequestMapping(value = "api/produto")
+ public class ProdutoController {
+@@ -41,15 +39,4 @@
+             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Erro ao excluir produto");
+         }
+     }
+-
+-    @GetMapping(value = "get-all-produto")
+-    public ResponseEntity<List<Produto>> getAllProdutos() {
+-        List<Produto> produtos = produtoService.getAllProdutos();
+-
+-        if (produtos.isEmpty()) {
+-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+-        }
+-
+-        return ResponseEntity.ok(produtos);
+-    }
+-}
+\ No newline at end of file
++} 
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.repositories;\r\n\r\nimport com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.util.Optional;\r\n\r\n@Repository\r\npublic interface EmpresaRepository extends JpaRepository<Empresa, Long> {\r\n//lucas ortiz\r\n    Optional<Empresa> findByCnpj(String cnpj);\r\n    @Query(\"SELECT COUNT(e) > 0 FROM Empresa e\")\r\n    boolean existsAny();\r\n\r\n    Empresa findFirstByOrderByIdDesc();\r\n}
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java	
+@@ -9,7 +9,7 @@
+ 
+ @Repository
+ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
+-//lucas ortiz
++
+     Optional<Empresa> findByCnpj(String cnpj);
+     @Query("SELECT COUNT(e) > 0 FROM Empresa e")
+     boolean existsAny();
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.services;\r\n\r\nimport com.quata.quatasafeguardbackend.ValidadorDeCnpj;\r\nimport com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;\r\nimport com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;\r\nimport com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;\r\nimport com.quata.quatasafeguardbackend.repositories.EmpresaRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.time.LocalDateTime;\r\nimport java.util.Optional;\r\nimport java.util.NoSuchElementException;\r\n\r\n@Service\r\npublic class EmpresaService {\r\n    //lucas ortiz\r\n    @Autowired\r\n    private EmpresaRepository empresaRepository;\r\n\r\n    public Empresa getEmpresaById(Long id) {\r\n        return empresaRepository.findById(id)\r\n                .orElseThrow(() -> new NoSuchElementException(\"A empresa não foi encontrada\"));\r\n    }\r\n\r\n\r\n    public Optional<Empresa> getEmpresaByCnpj(String cnpj) {\r\n        return empresaRepository.findByCnpj(cnpj);\r\n    }\r\n\r\n    public Empresa saveEmpresa(Empresa empresa) {\r\n        System.out.println(\"Recebendo empresa: \" + empresa);\r\n        if (!Empresa.isCNPJ(empresa.getCnpj())) {\r\n            throw new IllegalArgumentException(\"CNPJ inválido.\");\r\n        }\r\n        if (empresa.getEmail() == null || empresa.getEmail().isEmpty()) {\r\n            throw new IllegalArgumentException(\"O campo email é obrigatório.\");\r\n        }\r\n        return empresaRepository.save(empresa);\r\n    }\r\n\r\n\r\n    public boolean deleteEmpresa(String cnpj) {\r\n        Optional<Empresa> empresa = getEmpresaByCnpj(cnpj);\r\n\r\n        if (empresa.isEmpty()) {\r\n            return false;\r\n        }\r\n\r\n        try {\r\n            empresaRepository.deleteById(empresa.get().getId());\r\n            return true;\r\n        } catch (Exception e) {\r\n            return false;\r\n        }\r\n    }\r\n    public Empresa atualizarEmpresa(Empresa empresa) {\r\n        if (!Empresa.isCNPJ(empresa.getCnpj())) {\r\n            throw new IllegalArgumentException(\"CNPJ inválido.\");\r\n        }\r\n\r\n        Empresa empresaExistente = empresaRepository.findByCnpj(empresa.getCnpj())\r\n                .orElseThrow(() -> new NoSuchElementException(\"A empresa não foi encontrada.\"));\r\n\r\n        empresaExistente.setRazaoSocial(empresa.getRazaoSocial());\r\n        empresaExistente.setNomeFantasia(empresa.getNomeFantasia());\r\n        empresaExistente.setCnpj(empresa.getCnpj());\r\n        empresaExistente.setLogoPequeno(empresa.getLogoPequeno());\r\n        empresaExistente.setLogoGrande(empresa.getLogoGrande());\r\n        empresaExistente.setEndereco(empresa.getEndereco());\r\n        empresaExistente.setBairro(empresa.getBairro());\r\n        empresaExistente.setCidade(empresa.getCidade());\r\n        empresaExistente.setUf(empresa.getUf());\r\n        empresaExistente.setTelefone(empresa.getTelefone());\r\n        empresaExistente.setSite(empresa.getSite());\r\n\r\n        return empresaRepository.save(empresaExistente);\r\n    }\r\n\r\n    public DetalhesEmpresaDTO getDetalhesEmpresa() {\r\n        Empresa empresa = empresaRepository.findFirstByOrderByIdDesc();\r\n        if (empresa == null) {\r\n            throw new NoSuchElementException(\"Nenhuma empresa encontrada.\");\r\n        }\r\n\r\n        return new DetalhesEmpresaDTO(\r\n                empresa.getId(),\r\n                empresa.getNomeFantasia(),\r\n                empresa.getRazaoSocial(),\r\n                empresa.getSite(),\r\n                empresa.getEmail(),\r\n                empresa.getCnpj(),\r\n                empresa.getEndereco(),\r\n                empresa.getBairro(),\r\n                empresa.getCidade(),\r\n                empresa.getUf(),\r\n                empresa.getCep(),\r\n                empresa.getTelefone(),\r\n                empresa.getLogoGrande(),\r\n                empresa.getLogoPequeno(),\r\n                empresa.getDataCriacao() != null ? empresa.getDataCriacao().toString() : null\r\n        );\r\n    }\r\n\r\n\r\n    public VerificaParametrizacaoDTO verificarParametrizacao() {\r\n        boolean existe = empresaRepository.existsAny();\r\n        return new VerificaParametrizacaoDTO(existe);\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java	
+@@ -1,6 +1,5 @@
+ package com.quata.quatasafeguardbackend.services;
+ 
+-import com.quata.quatasafeguardbackend.ValidadorDeCnpj;
+ import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
+ import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
+ import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
+@@ -14,7 +13,6 @@
+ 
+ @Service
+ public class EmpresaService {
+-    //lucas ortiz
+     @Autowired
+     private EmpresaRepository empresaRepository;
+ 
+@@ -23,23 +21,25 @@
+                 .orElseThrow(() -> new NoSuchElementException("A empresa não foi encontrada"));
+     }
+ 
+-
+     public Optional<Empresa> getEmpresaByCnpj(String cnpj) {
+         return empresaRepository.findByCnpj(cnpj);
+     }
+ 
+     public Empresa saveEmpresa(Empresa empresa) {
+-        System.out.println("Recebendo empresa: " + empresa);
++        if (empresaRepository.existsAny()) {
++            throw new IllegalStateException("A parametrização já foi realizada.");
++        }
+         if (!Empresa.isCNPJ(empresa.getCnpj())) {
+             throw new IllegalArgumentException("CNPJ inválido.");
+         }
+-        if (empresa.getEmail() == null || empresa.getEmail().isEmpty()) {
+-            throw new IllegalArgumentException("O campo email é obrigatório.");
++        Optional<Empresa> empresaExistente = getEmpresaByCnpj(empresa.getCnpj());
++        if (empresaExistente.isPresent()) {
++            throw new IllegalStateException("Uma empresa com este CNPJ já existe: " + Empresa.imprimeCNPJ(empresa.getCnpj()));
+         }
++        empresa.setDataCriacao(LocalDateTime.now());
+         return empresaRepository.save(empresa);
+     }
+ 
+-
+     public boolean deleteEmpresa(String cnpj) {
+         Optional<Empresa> empresa = getEmpresaByCnpj(cnpj);
+ 
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.controllers;\r\n\r\nimport com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;\r\nimport com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;\r\nimport com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;\r\nimport com.quata.quatasafeguardbackend.services.EmpresaService;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.NoSuchElementException;\r\n\r\n@RestController\r\n@RequestMapping(value = \"api/empresa\")\r\npublic class EmpresaController {\r\n    //lucas ortiz\r\n    @Autowired\r\n    private EmpresaService empresaService;\r\n\r\n    @GetMapping(value = \"get-empresa/{id}\")\r\n    public ResponseEntity<Empresa> getEmpresa(@PathVariable Long id) {\r\n        Empresa empresa = empresaService.getEmpresaById(id);\r\n        return ResponseEntity.ok().body(empresa);\r\n    }\r\n\r\n    @PostMapping(value = \"create-empresa\")\r\n    public ResponseEntity<Object> createEmpresa(@RequestBody Empresa empresa) {\r\n        Empresa empresa1 = empresaService.saveEmpresa(empresa);\r\n        return ResponseEntity.ok().body(empresa1);\r\n    }\r\n\r\n    @PutMapping(value=\"update-empresa\")\r\n    public ResponseEntity<Object> updateEmpresa(@RequestBody Empresa empresa) {\r\n        Empresa empresa1 = empresaService.atualizarEmpresa(empresa);\r\n        return ResponseEntity.ok().body(empresa1);\r\n    }\r\n\r\n    @GetMapping(\"/detalhes\")\r\n    public ResponseEntity<DetalhesEmpresaDTO> obterDetalhesEmpresa() {\r\n        try {\r\n            DetalhesEmpresaDTO detalhesEmpresa = empresaService.getDetalhesEmpresa();\r\n            return ResponseEntity.ok(detalhesEmpresa);\r\n        } catch (NoSuchElementException e) {\r\n            return ResponseEntity.notFound().build();\r\n        }\r\n    }\r\n\r\n    @GetMapping(\"/verifica-parametrizacao\")\r\n    public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {\r\n        VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();\r\n        return ResponseEntity.ok(existe);\r\n    }\r\n\r\n    @DeleteMapping(value = \"delete-empresa/{cnpj}\")\r\n    public ResponseEntity<Object> deleteEmpresa(@PathVariable String cnpj) {\r\n        if (empresaService.deleteEmpresa(cnpj)) {\r\n            return ResponseEntity.ok().body(\"Empresa excluída com sucesso\");\r\n        } else {\r\n            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(\"Erro ao excluir empresa\");\r\n        }\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java	
+@@ -14,7 +14,6 @@
+ @RestController
+ @RequestMapping(value = "api/empresa")
+ public class EmpresaController {
+-    //lucas ortiz
+     @Autowired
+     private EmpresaService empresaService;
+ 
+@@ -46,7 +45,7 @@
+         }
+     }
+ 
+-    @GetMapping("/verifica-parametrizacao")
++    @GetMapping("/verifica-param")
+     public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {
+         VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();
+         return ResponseEntity.ok(existe);
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.controllers;\r\n\r\nimport com.quata.quatasafeguardbackend.entities.Doacao;\r\nimport com.quata.quatasafeguardbackend.services.DoacaoService;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.NoSuchElementException;\r\n\r\n@RestController\r\n@RequestMapping(\"/api/doacoes\")\r\npublic class DoacaoController {\r\n\r\n    @Autowired\r\n    private DoacaoService doacaoService;\r\n\r\n    //lucas ortiz\r\n    @PostMapping\r\n    public ResponseEntity<Doacao> receberDoacaoDeRecursos(@RequestBody Doacao doacao) {\r\n        System.out.println(\"Recebendo doação: \" + doacao);\r\n        try {\r\n            Doacao novaDoacao = doacaoService.receberDoacaoDeRecursos(doacao);\r\n            return ResponseEntity.ok(novaDoacao);\r\n        } catch (IllegalArgumentException e) {\r\n            return ResponseEntity.badRequest().body(null);\r\n        } catch (NoSuchElementException e) {\r\n            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);\r\n        }\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java	
+@@ -5,7 +5,10 @@
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
++import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.RequestBody;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
+ 
+ import java.util.NoSuchElementException;
+ 
+@@ -18,10 +21,9 @@
+ 
+     //lucas ortiz
+     @PostMapping
+-    public ResponseEntity<Doacao> receberDoacaoDeRecursos(@RequestBody Doacao doacao) {
+-        System.out.println("Recebendo doação: " + doacao);
++    public ResponseEntity<Doacao> registrarDoacao(@RequestBody Doacao doacao) {
+         try {
+-            Doacao novaDoacao = doacaoService.receberDoacaoDeRecursos(doacao);
++            Doacao novaDoacao = doacaoService.registrarDoacao(doacao);
+             return ResponseEntity.ok(novaDoacao);
+         } catch (IllegalArgumentException e) {
+             return ResponseEntity.badRequest().body(null);
+@@ -29,5 +31,4 @@
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+         }
+     }
+-
+ }
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities.empresa_parametrizacao;\r\n\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport java.time.LocalDate;\r\nimport java.time.LocalDateTime;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\n@Table(name = \"parametrizacao\")\r\npublic class Empresa {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long id;\r\n\r\n    @Column(name = \"nome_fantasia\", nullable = false)\r\n    private String nomeFantasia;\r\n\r\n    @Column(name = \"razao_social\", nullable = false)\r\n    private String razaoSocial;\r\n\r\n    @Column(name = \"site\")\r\n    private String site;\r\n\r\n    @Column(name = \"email\")\r\n    private String email;\r\n\r\n    @Column(name = \"cnpj\", unique = true)\r\n    private String cnpj;\r\n\r\n    @Column(name = \"endereco\")\r\n    private String endereco;\r\n\r\n    @Column(name = \"bairro\")\r\n    private String bairro;\r\n\r\n    @Column(name = \"cidade\")\r\n    private String cidade;\r\n\r\n    @Column(name = \"uf\")\r\n    private String uf;\r\n\r\n    @Column(name = \"cep\")\r\n    private String cep;\r\n\r\n    @Column(name = \"tel\")\r\n    private String telefone;\r\n\r\n    @Column(name = \"logo_grande\")\r\n    private String logoGrande;\r\n\r\n    @Column(name = \"logo_pequeno\")\r\n    private String logoPequeno;\r\n\r\n    @Column(name = \"data_criacao\", nullable = false)\r\n    private LocalDate dataCriacao;\r\n\r\n    public static boolean isCNPJ(String cnpj) {\r\n        if (cnpj == null || cnpj.length() != 14 || cnpj.matches(\"(\\\\d)\\\\1{13}\")) {//regex par a verificar se os digitos sao sequenciais\r\n            return false;\r\n        }\r\n\r\n        try {\r\n            int[] pesosPrimeiroDigito = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};\r\n            int[] pesosSegundoDigito = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};\r\n\r\n            //calcula o primeiro digito verificador\r\n            char digito13 = calcularDigito(cnpj, pesosPrimeiroDigito);\r\n\r\n            //calcula o segundo digito verificador\r\n            char digito14 = calcularDigito(cnpj, pesosSegundoDigito);\r\n\r\n            //compara os dígitos calculados com os fornecidos\r\n            return digito13 == cnpj.charAt(12) && digito14 == cnpj.charAt(13);\r\n        } catch (Exception e) {\r\n            return false;\r\n        }\r\n    }\r\n\r\n    private static char calcularDigito(String cnpj, int[] pesos) {\r\n        int soma = 0;\r\n        for (int i = 0; i < pesos.length; i++) {\r\n            soma += (cnpj.charAt(i) - '0') * pesos[i];\r\n        }\r\n        int resto = soma % 11;\r\n        return (resto < 2) ? '0' : (char) ((11 - resto) + '0');\r\n    }\r\n    public static String imprimeCNPJ(String cnpj) {\r\n        if (cnpj == null || cnpj.length() != 14) {\r\n            throw new IllegalArgumentException(\"CNPJ inválido: deve conter exatamente 14 dígitos.\");\r\n        }\r\n        return String.format(\"%s.%s.%s/%s-%s\",\r\n                cnpj.substring(0, 2),\r\n                cnpj.substring(2, 5),\r\n                cnpj.substring(5, 8),\r\n                cnpj.substring(8, 12),\r\n                cnpj.substring(12, 14)\r\n        );\r\n    }\r\n}\r\n\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java	
+@@ -5,7 +5,6 @@
+ import lombok.NoArgsConstructor;
+ import lombok.Setter;
+ 
+-import java.time.LocalDate;
+ import java.time.LocalDateTime;
+ 
+ @Entity
+@@ -58,8 +57,8 @@
+     @Column(name = "logo_pequeno")
+     private String logoPequeno;
+ 
+-    @Column(name = "data_criacao", nullable = false)
+-    private LocalDate dataCriacao;
++    @Column(name = "data_criacao", nullable = true)
++    private LocalDateTime dataCriacao;
+ 
+     public static boolean isCNPJ(String cnpj) {
+         if (cnpj == null || cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {//regex par a verificar se os digitos sao sequenciais
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonIgnore;\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\nimport org.springframework.security.web.csrf.CsrfToken;\r\n\r\nimport java.util.List;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class Funcionario {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long idFuncionario;\r\n    private String nome;\r\n    private String cpf;\r\n    private String cargo;\r\n    private Double salario;\r\n    private String permissoes;\r\n    private String login;\r\n    private String senha;\r\n\r\n    @OneToMany(mappedBy = \"funcionario\")\r\n    private List<Agenda> agendas;\r\n\r\n    @OneToMany(mappedBy = \"funcionario\")\r\n    @JsonIgnore\r\n    private List<Doacao> doacoes;\r\n\r\n    @OneToMany(mappedBy = \"funcionario\")\r\n    private List<Recebimento> recebimentos;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"caixa_id\")\r\n    private Caixa caixa;\r\n}
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java	
+@@ -1,6 +1,5 @@
+ package com.quata.quatasafeguardbackend.entities;
+ 
+-import com.fasterxml.jackson.annotation.JsonIgnore;
+ import jakarta.persistence.*;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+@@ -16,7 +15,7 @@
+ public class Funcionario {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long idFuncionario;
++    private Integer idFuncionario;
+     private String nome;
+     private String cpf;
+     private String cargo;
+@@ -29,7 +28,6 @@
+     private List<Agenda> agendas;
+ 
+     @OneToMany(mappedBy = "funcionario")
+-    @JsonIgnore
+     private List<Doacao> doacoes;
+ 
+     @OneToMany(mappedBy = "funcionario")
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\nimport org.hibernate.annotations.CreationTimestamp;\r\n\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class Caixa {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long id;\r\n    @CreationTimestamp\r\n    private Date dataAbertura;\r\n    private Date dataFechamento;\r\n    private Double valorInicial;\r\n    private Double valorFechamento;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"funcionario_id\")\r\n    private Funcionario funcionario;\r\n\r\n    @OneToMany(mappedBy = \"caixa\")\r\n    private List<Funcionario> funcionarios;\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java	
+@@ -4,7 +4,6 @@
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+ import lombok.Setter;
+-import org.hibernate.annotations.CreationTimestamp;
+ 
+ import java.util.Date;
+ import java.util.List;
+@@ -16,8 +15,7 @@
+ public class Caixa {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long id;
+-    @CreationTimestamp
++    private Integer id;
+     private Date dataAbertura;
+     private Date dataFechamento;
+     private Double valorInicial;
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonFormat;\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport java.time.LocalDate;\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class Doacao {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long idDoacao;\r\n\r\n    @Column(nullable = false)\r\n    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = \"yyyy-MM-dd\")\r\n    private LocalDate data;\r\n\r\n    private Double valor;\r\n\r\n    private Integer quantidadeItens;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"funcionario_id\", nullable = false)\r\n    private Funcionario funcionario;\r\n\r\n    @ManyToOne(cascade = CascadeType.PERSIST)\r\n    @JoinColumn(name = \"caixa_id\", nullable = true)\r\n    private Caixa caixa;\r\n\r\n    @OneToMany(mappedBy = \"doacao\", cascade = CascadeType.ALL, orphanRemoval = true)\r\n    private List<Item> itensDoacao;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"doador_id\", nullable = true)\r\n    private Doador doador;\r\n\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java	
+@@ -1,12 +1,10 @@
+ package com.quata.quatasafeguardbackend.entities;
+ 
+-import com.fasterxml.jackson.annotation.JsonFormat;
+ import jakarta.persistence.*;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+ import lombok.Setter;
+ 
+-import java.time.LocalDate;
+ import java.util.Date;
+ import java.util.List;
+ 
+@@ -21,8 +19,7 @@
+     private Long idDoacao;
+ 
+     @Column(nullable = false)
+-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+-    private LocalDate data;
++    private Date data;
+ 
+     private Double valor;
+ 
+@@ -32,7 +29,7 @@
+     @JoinColumn(name = "funcionario_id", nullable = false)
+     private Funcionario funcionario;
+ 
+-    @ManyToOne(cascade = CascadeType.PERSIST)
++    @ManyToOne
+     @JoinColumn(name = "caixa_id", nullable = true)
+     private Caixa caixa;
+ 
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonBackReference;\r\nimport com.fasterxml.jackson.annotation.JsonFormat;\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport java.time.LocalDate;\r\n\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class RegistroSaidaItens {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long idRegistroSaidaItens;\r\n    private Integer qtde;\r\n    private String motivo;\r\n\r\n\r\n    @Column(nullable = false)\r\n    @JsonFormat(pattern = \"yyyy-MM-dd\")\r\n    private LocalDate dataSaida;\r\n    @JsonBackReference\r\n    @ManyToOne\r\n    @JoinColumn(name = \"produtos_idProduto\")\r\n    private Produto produto;\r\n\r\n    @PrePersist\r\n    protected void onCreate() {\r\n        this.dataSaida = LocalDate.now();\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java	
+@@ -1,15 +1,10 @@
+ package com.quata.quatasafeguardbackend.entities;
+ 
+-import com.fasterxml.jackson.annotation.JsonBackReference;
+-import com.fasterxml.jackson.annotation.JsonFormat;
+ import jakarta.persistence.*;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+ import lombok.Setter;
+ 
+-import java.time.LocalDate;
+-
+-
+ @Entity
+ @Getter
+ @Setter
+@@ -17,21 +12,10 @@
+ public class RegistroSaidaItens {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long idRegistroSaidaItens;
++    private Integer idRegistroSaidaItens;
+     private Integer qtde;
+-    private String motivo;
+ 
+-
+-    @Column(nullable = false)
+-    @JsonFormat(pattern = "yyyy-MM-dd")
+-    private LocalDate dataSaida;
+-    @JsonBackReference
+     @ManyToOne
+     @JoinColumn(name = "produtos_idProduto")
+     private Produto produto;
+-
+-    @PrePersist
+-    protected void onCreate() {
+-        this.dataSaida = LocalDate.now();
+-    }
+ }
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.services;\r\n\r\nimport com.quata.quatasafeguardbackend.entities.*;\r\nimport com.quata.quatasafeguardbackend.repositories.CaixaRepository;\r\nimport com.quata.quatasafeguardbackend.repositories.DoacaoRepository;\r\nimport com.quata.quatasafeguardbackend.repositories.FuncionarioRepository;\r\nimport com.quata.quatasafeguardbackend.repositories.ProdutoRepository;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.cglib.core.Local;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.time.LocalDate;\r\nimport java.util.Date;\r\nimport java.util.NoSuchElementException;\r\n\r\n@Service\r\npublic class DoacaoService {\r\n\r\n    @Autowired\r\n    private DoacaoRepository doacaoRepository;\r\n\r\n    @Autowired\r\n    private ProdutoRepository produtoRepository;\r\n\r\n    @Autowired\r\n    private FuncionarioRepository funcionarioRepository;\r\n\r\n    @Autowired\r\n    private CaixaRepository caixaRepository;\r\n    //lucas ortiz - registrar doacao recursos\r\n    public Doacao receberDoacaoDeRecursos(Doacao doacao) {\r\n        if (doacao.getCaixa() != null && doacao.getCaixa().getId() != null) {\r\n            Caixa caixa = caixaRepository.findById(doacao.getCaixa().getId())\r\n                    .orElseThrow(() -> new NoSuchElementException(\"Caixa não encontrado\"));\r\n            doacao.setCaixa(caixa);\r\n        }\r\n        if (doacao.getFuncionario() != null && doacao.getFuncionario().getIdFuncionario() != null) {\r\n            Funcionario funcionario = funcionarioRepository.findById(doacao.getFuncionario().getIdFuncionario())\r\n                    .orElseThrow(() -> new NoSuchElementException(\"Funcionario não encontrado\"));\r\n            doacao.setFuncionario(funcionario);\r\n        }\r\n        doacao.setData(LocalDate.now());\r\n        for (Item item : doacao.getItensDoacao()) {\r\n            Produto produto = produtoRepository.findById(item.getProduto().getIdProduto())\r\n                    .orElseThrow(() -> new NoSuchElementException(\"Produto não encontrado\"));\r\n\r\n            produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQtde());\r\n            produtoRepository.save(produto);\r\n            item.setDoacao(doacao);\r\n        }\r\n        return doacaoRepository.save(doacao);\r\n    }\r\n\r\n\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java	
+@@ -1,16 +1,13 @@
+ package com.quata.quatasafeguardbackend.services;
+ 
+-import com.quata.quatasafeguardbackend.entities.*;
+-import com.quata.quatasafeguardbackend.repositories.CaixaRepository;
++import com.quata.quatasafeguardbackend.entities.Doacao;
++import com.quata.quatasafeguardbackend.entities.Item;
++import com.quata.quatasafeguardbackend.entities.Produto;
+ import com.quata.quatasafeguardbackend.repositories.DoacaoRepository;
+-import com.quata.quatasafeguardbackend.repositories.FuncionarioRepository;
+ import com.quata.quatasafeguardbackend.repositories.ProdutoRepository;
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.cglib.core.Local;
+ import org.springframework.stereotype.Service;
+ 
+-import java.time.LocalDate;
+-import java.util.Date;
+ import java.util.NoSuchElementException;
+ 
+ @Service
+@@ -22,34 +19,23 @@
+     @Autowired
+     private ProdutoRepository produtoRepository;
+ 
+-    @Autowired
+-    private FuncionarioRepository funcionarioRepository;
+-
+-    @Autowired
+-    private CaixaRepository caixaRepository;
+     //lucas ortiz - registrar doacao recursos
+-    public Doacao receberDoacaoDeRecursos(Doacao doacao) {
+-        if (doacao.getCaixa() != null && doacao.getCaixa().getId() != null) {
+-            Caixa caixa = caixaRepository.findById(doacao.getCaixa().getId())
+-                    .orElseThrow(() -> new NoSuchElementException("Caixa não encontrado"));
+-            doacao.setCaixa(caixa);
++    public Doacao registrarDoacao(Doacao doacao) {
++        if (doacao.getItensDoacao() == null || doacao.getItensDoacao().isEmpty()) {
++            throw new IllegalArgumentException("A doação deve conter pelo menos um item.");
+         }
+-        if (doacao.getFuncionario() != null && doacao.getFuncionario().getIdFuncionario() != null) {
+-            Funcionario funcionario = funcionarioRepository.findById(doacao.getFuncionario().getIdFuncionario())
+-                    .orElseThrow(() -> new NoSuchElementException("Funcionario não encontrado"));
+-            doacao.setFuncionario(funcionario);
+-        }
+-        doacao.setData(LocalDate.now());
++
+         for (Item item : doacao.getItensDoacao()) {
+             Produto produto = produtoRepository.findById(item.getProduto().getIdProduto())
+                     .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
+ 
++            // atualiza o estoque do produto
+             produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQtde());
+             produtoRepository.save(produto);
++
++            // aq vai associar o item a doacao
+             item.setDoacao(doacao);
+         }
+         return doacaoRepository.save(doacao);
+     }
+-
+-
+ }
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonBackReference;\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class Item {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long idItem;\r\n    private Integer qtde;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"produtos_idProduto\")\r\n    @JsonBackReference\r\n    private Produto produto;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"doacao_id\")\r\n    private Doacao doacao;\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java	
+@@ -1,6 +1,5 @@
+ package com.quata.quatasafeguardbackend.entities;
+ 
+-import com.fasterxml.jackson.annotation.JsonBackReference;
+ import jakarta.persistence.*;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+@@ -13,12 +12,11 @@
+ public class Item {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long idItem;
++    private Integer idItem;
+     private Integer qtde;
+ 
+     @ManyToOne
+     @JoinColumn(name = "produtos_idProduto")
+-    @JsonBackReference
+     private Produto produto;
+ 
+     @ManyToOne
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend.entities;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonIgnore;\r\nimport com.fasterxml.jackson.annotation.JsonManagedReference;\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.NoArgsConstructor;\r\nimport lombok.Setter;\r\n\r\nimport java.util.List;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\n@NoArgsConstructor\r\npublic class Produto {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long idProduto;\r\n    private String nomeProduto;\r\n    private String descricaoProduto;\r\n    private Integer quantidadeEstoque;\r\n\r\n    @OneToMany(mappedBy = \"produto\",fetch = FetchType.LAZY)\r\n    @JsonIgnore\r\n    private List<Item> itens;\r\n    @JsonManagedReference\r\n    @OneToMany(mappedBy = \"produto\")\r\n    private List<RegistroSaidaItens> registroSaidaItens;\r\n\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java	
+@@ -1,7 +1,5 @@
+ package com.quata.quatasafeguardbackend.entities;
+ 
+-import com.fasterxml.jackson.annotation.JsonIgnore;
+-import com.fasterxml.jackson.annotation.JsonManagedReference;
+ import jakarta.persistence.*;
+ import lombok.Getter;
+ import lombok.NoArgsConstructor;
+@@ -21,10 +19,9 @@
+     private String descricaoProduto;
+     private Integer quantidadeEstoque;
+ 
+-    @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
+-    @JsonIgnore
++    @OneToMany(mappedBy = "produto")
+     private List<Item> itens;
+-    @JsonManagedReference
++
+     @OneToMany(mappedBy = "produto")
+     private List<RegistroSaidaItens> registroSaidaItens;
+ 

@@ -5,7 +5,10 @@ import com.quata.quatasafeguardbackend.services.DoacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 
@@ -18,10 +21,9 @@ public class DoacaoController {
 
     //lucas ortiz
     @PostMapping
-    public ResponseEntity<Doacao> receberDoacaoDeRecursos(@RequestBody Doacao doacao) {
-        System.out.println("Recebendo doação: " + doacao);
+    public ResponseEntity<Doacao> registrarDoacao(@RequestBody Doacao doacao) {
         try {
-            Doacao novaDoacao = doacaoService.receberDoacaoDeRecursos(doacao);
+            Doacao novaDoacao = doacaoService.registrarDoacao(doacao);
             return ResponseEntity.ok(novaDoacao);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
@@ -29,5 +31,4 @@ public class DoacaoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
 }

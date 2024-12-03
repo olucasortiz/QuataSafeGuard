@@ -1,12 +1,9 @@
 package com.quata.quatasafeguardbackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.web.csrf.CsrfToken;
-
 import java.util.List;
 
 @Entity
@@ -16,7 +13,7 @@ import java.util.List;
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFuncionario;
+    private Integer idFuncionario;
     private String nome;
     private String cpf;
     private String cargo;
@@ -25,11 +22,11 @@ public class Funcionario {
     private String login;
     private String senha;
 
-    @OneToMany(mappedBy = "funcionario")
-    private List<Agenda> agendas;
 
     @OneToMany(mappedBy = "funcionario")
-    @JsonIgnore
+    private List<AgendaVisita> visitas; // Novo relacionamento para gerenciar visitas
+
+    @OneToMany(mappedBy = "funcionario")
     private List<Doacao> doacoes;
 
     @OneToMany(mappedBy = "funcionario")

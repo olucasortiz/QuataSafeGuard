@@ -29,6 +29,9 @@ public class EmpresaService {
     }
 
     public Empresa saveEmpresa(Empresa empresa) {
+        if(empresaRepository.existsAny()){
+            throw new IllegalArgumentException("Já existe uma empresa cadastrada    ");
+        }
         System.out.println("Recebendo empresa: " + empresa);
         if (!Empresa.isCNPJ(empresa.getCnpj())) {
             throw new IllegalArgumentException("CNPJ inválido.");

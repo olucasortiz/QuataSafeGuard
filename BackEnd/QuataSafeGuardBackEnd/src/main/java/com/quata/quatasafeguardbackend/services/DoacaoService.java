@@ -40,6 +40,7 @@ public class DoacaoService {
             doacao.setFuncionario(funcionario);
         }
         doacao.setData(LocalDate.now());
+        /*
         for (Item item : doacao.getItensDoacao()) {
             Produto produto = produtoRepository.findById(item.getProduto().getIdProduto())
                     .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
@@ -48,6 +49,7 @@ public class DoacaoService {
             produtoRepository.save(produto);
             item.setDoacao(doacao);
         }
+         */
         return doacaoRepository.save(doacao);
     }
 

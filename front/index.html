@@ -42,7 +42,7 @@
             font-size: 1.5rem;
             padding: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         .menu-button:hover {
@@ -60,6 +60,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             z-index: 1000;
+        }
+
+        .menu-container.active .menu-dropdown {
+            display: block;
+        }
+
+        .menu-button:hover {
+            background-color: var(--secondary-color);
+            color: white;
         }
 
         /* Corrigido para manter o menu aberto enquanto o mouse está sobre o menu ou o botão */
@@ -119,6 +128,9 @@
             <div class="menu-dropdown">
                 <a href="AgendarAnimal.html">Agendar Animal</a>
                 <a href="EntregarAnimal.html">Entregar Animal</a>
+                <a href="saidaEstoque.html">Saida de Estoque</a>
+                <a href="ReceberDoacaoRecurso.html">Receber Doacao de Recursos</a>
+
             </div>
         </div>
 
@@ -131,5 +143,6 @@
             <button onclick="window.location.href='cadastro.html'">Cadastro</button>
         </div>
     </div>
+    <script src="js/menu.js"></script>
 </body>
 </html>

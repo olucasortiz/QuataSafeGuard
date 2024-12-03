@@ -25,7 +25,7 @@ public class DoacaoController {
     private DoadorService doadorService;
 
     // Endpoint para registrar a doação de recursos
-    @PostMapping("/receber")
+    @PostMapping
     public ResponseEntity<String> receberDoacao(
             @RequestParam String cpf,        // CPF do doador
             @RequestParam Long produtoId,    // ID do produto

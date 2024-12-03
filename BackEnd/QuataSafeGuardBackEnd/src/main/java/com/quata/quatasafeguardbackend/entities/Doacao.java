@@ -38,10 +38,6 @@ public class Doacao {
     @JoinColumn(name = "caixa_id", nullable = true)
     private Caixa caixa;
 
-    @OneToMany(mappedBy = "doacao", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("doacao-itens")
-    private List<Item> itensDoacao;
-
     @ManyToOne
     @JoinColumn(name = "doador_id", nullable = true)
     private Doador doador;

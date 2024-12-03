@@ -20,10 +20,4 @@ public class Item {
     @JoinColumn(name = "produtos_idProduto")
     @JsonBackReference
     private Produto produto;
-
-
-    @ManyToOne
-    @JoinColumn(name = "doacao_id", nullable = false)
-    @JsonBackReference("doacao-itens")
-    private Doacao doacao;
 }

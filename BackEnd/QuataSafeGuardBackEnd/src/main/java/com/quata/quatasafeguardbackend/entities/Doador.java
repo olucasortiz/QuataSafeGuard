@@ -1,5 +1,6 @@
 package com.quata.quatasafeguardbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Doador {
     private String telefone;
     private Integer idade;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "doador")
     private List<Doacao> doacoes;
 

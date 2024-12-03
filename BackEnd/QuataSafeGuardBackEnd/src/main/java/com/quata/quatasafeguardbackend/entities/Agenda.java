@@ -22,6 +22,11 @@ public class Agenda {
     private String motivo; // Informações adicionais (ex: "Nome do animal")
 
     @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
+
+    @ManyToOne
     @JoinColumn(name = "doador_id") // Relacionamento com Doador
     private Doador doador;
 

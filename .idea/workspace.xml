@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af98448f-5e4e-434c-bc9c-8802a68b057a" name="Changes" comment="atualizado" />
+    <list default="true" id="af98448f-5e4e-434c-bc9c-8802a68b057a" name="Changes" comment="atualizado">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ReceptorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/ReceptorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ReceptorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ReceptorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ReceptorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ReceptorService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733294568476</updated>
       <workItem from="1733294569550" duration="168000" />
-      <workItem from="1733298327677" duration="4901000" />
+      <workItem from="1733298327677" duration="6683000" />
     </task>
     <task id="LOCAL-00001" summary="nova branch">
       <option name="closed" value="true" />
@@ -129,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733303424946</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="atualizado">
+      <option name="closed" value="true" />
+      <created>1733303448073</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733303448073</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

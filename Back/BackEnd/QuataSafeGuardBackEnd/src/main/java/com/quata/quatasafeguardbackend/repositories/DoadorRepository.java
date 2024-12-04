@@ -8,6 +8,6 @@ import java.util.Optional;
 
 
 @Repository
-public interface DoadorRepository extends JpaRepository<Doador, Integer> {
+public interface DoadorRepository extends JpaRepository<Doador, String> {
     Optional<Doador> findByCpf(String cpf);
 }

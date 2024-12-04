@@ -32,6 +32,7 @@
                 <button type="submit" id="btnSalvar">Salvar</button>
             </form>
         </section>
+
         <section class="table-section">
             <h2>Lista de Doadores</h2>
             <table>
@@ -46,11 +47,18 @@
                     </tr>
                 </thead>
                 <tbody id="tabelaDoadores">
-                    <!-- Dados serão inseridos aqui -->
+                    <script carregarDoadores()></script>
                 </tbody>
             </table>
         </section>
     </main>
     <script src="gerenciamento_de_doadores.js"></script>
+    <script>
+        // Conectar o formulário de doador com as funções JavaScript
+        document.getElementById("doadorForm").addEventListener("submit", salvarDoador());
+
+        window.onload = carregarDoadores;
+
+    </script>
 </body>
 </html>

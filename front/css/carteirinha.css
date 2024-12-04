@@ -1,0 +1,18 @@
+.info-animal {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.filter {
+    display: flex;
+    margin: 20px 10px;
+    justify-content: space-between;
+}
+
+.filter div input {
+    padding: 10px 10px 10px 10px;
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping(value = "api/empresa")
 public class EmpresaController {
+    //lucas ortiz
     @Autowired
     private EmpresaService empresaService;
 
@@ -45,7 +46,7 @@ public class EmpresaController {
         }
     }
 
-    @GetMapping("/verifica-param")
+    @GetMapping("/verifica-parametrizacao")
     public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {
         VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();
         return ResponseEntity.ok(existe);

@@ -12,12 +12,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class TipoAnimal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipo;
-    private String descricao;
+    private Integer id;
 
-    @OneToMany(mappedBy = "tipoAnimal")
-    private List<Animal> animais;
-
+    private String nome;
 }

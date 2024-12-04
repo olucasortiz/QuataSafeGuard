@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Vacinas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/listaAnimal.css">
+    <link rel="stylesheet" href="css/carteirinha.css">
+</head>
+<body onload="listarVacina()">
+    <!-- Barra Fixa -->
+    <header class="navbar">
+        <a href="index.html" class="navbar-logo">QuataSafeGuard</a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <h1>Cadastrar Nova Vacina</h1>
+        <p class="aviso">Cadastro de Vacinas</p>
+        <form id="form-vacina" enctype="multipart/form-data">
+
+            <!-- Nome Vacina -->
+            <div class="form-group">
+                <label for="vacina">Vacina:</label>
+                <input type="text" id="vacina" name="vacina" placeholder="Digite a Vacina" required>
+            </div>
+
+            <!-- Lote -->
+            <div class="form-group">
+                <label for="lote">Lote:</label>
+                <input type="text" id="lote" name="lote" placeholder="Digite o Lote" required>
+            </div>
+
+            <!-- Data de Validade -->
+             <div class="form-group">
+                    <label for="validade">Data de Validade:</label>
+                    <input type="date" id="validade" name="validade" required>
+            </div>
+                
+            <!-- Botão de Enviar -->
+            <button type="submit" class="btn-submit">Registrar Vacina</button>
+        </form>
+
+        <div class="filter">
+            <div>
+                <label for="vacina-filter">Filtrar por Vacina</label>
+                <input type="text" id="vacina-filter" onkeyup="filterTable()" placeholder="Pesquisar Vacina">
+            </div>
+            <div>
+                <label for="lote-filter">Filtrar por Lote</label>
+                <input type="text" id="lote-filter" onkeyup="filterTable()" placeholder="Pesquisar Lote">
+            </div>
+        </div>  
+        <!-- Tabela de Vacinas -->
+         <table id="tabela-vacina">
+         </table>
+    </main>
+
+    <script src="js/Vacina.js"></script>
+</body>
+</html>

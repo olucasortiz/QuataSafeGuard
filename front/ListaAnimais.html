@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Animais</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/listaAnimal.css">
+</head>
+<body onload="listarAnimais()">
+    <!-- Barra Fixa -->
+    <header class="navbar">
+        <a href="index.html" class="navbar-logo">QuataSafeGuard</a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main id="form-agendamento" class="container">
+        <h1>Lista de Animais</h1>
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nameFilter">Filtrar por Nome:</label>
+                <input type="text" id="nameFilter" onkeyup="filterTable()">
+            </div>
+            <div class="form-group">
+                <label for="statusFilter">Filtrar por Status:</label>
+                <select id="statusFilter" onchange="filterTable()">
+                    <option value="">Todos</option>
+                    <option value="Disponível">Disponível para doação</option>
+                    <option value="Indisponível">Indisponível para doação</option>
+                </select>
+            </div>
+        </form>
+
+        <table id="animalTable">
+        </table>
+    </main>
+    <script src="js/ListaAnimal.js"></script>
+</body>
+</html>

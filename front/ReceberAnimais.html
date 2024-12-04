@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receber Novo Animal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/receber.css">
+</head>
+<body>
+    <!-- Barra Fixa -->
+    <header class="navbar">
+        <a href="index.html" class="navbar-logo">QuataSafeGuard</a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <h1>Cadastrar Novo Animal</h1>
+        <p class="aviso">Cadastro de animais que foram encontrados</p>
+        <form id="form-recebimento" enctype="multipart/form-data">
+
+            <!-- Nome do Animal -->
+            <div class="form-group">
+                <label for="nome-animal">Nome do Animal:</label>
+                <input type="text" id="nome-animal" name="nomeAnimal" placeholder="Digite o nome do animal" required>
+            </div>
+
+            <!-- Sexo do Animal -->
+            <div class="form-group">
+                <label for="sexo-animal">Sexo do Animal:</label>
+                <select id="sexo-animal" name="sexoAnimal" required>
+                    <option value="" disabled selected>Selecione o sexo do animal</option>
+                    <option value="M">Macho</option>
+                    <option value="F">Fêmea</option>
+                </select>
+            </div>
+
+            <!-- Data de Nascimento -->
+             <div class="form-group">
+                 <label for="nascimento-animal">Data de Nascimento:</label>
+                 <input type="date" id="nascimento-animal" name="nascimento-animal" required>
+            </div>
+                 
+            <!-- Idade do Animal -->
+            <div class="form-group">
+                <label for="idade-animal">Idade do Animal:</label>
+                <input type="number" id="idade-animal" name="idadeAnimal" placeholder="Digite a idade do animal (em anos)" required>
+            </div>
+
+            <!-- Tipo de Animal -->
+            <div class="form-group">
+                <label for="tipo-animal">Tipo de Animal:</label>
+                <select id="tipo-animal" name="tipoAnimal" required>
+                    <option value="" disabled selected>Selecione o tipo de animal</option>
+                    <option value="Cachorro">Cachorro</option>
+                    <option value="Gato">Gato</option>
+                </select>
+            </div>
+
+            <!-- Raça -->
+            <!-- <div class="form-group">
+                <label for="raca-animal">Raça do Animal:</label>
+                <input type="text" id="raca-animal" name="racaAnimal" placeholder="Digite a raça do animal" required>
+            </div> -->
+
+            <!-- Botão de Enviar -->
+            <button type="submit" class="btn-submit">Registrar Animal</button>
+        </form>
+    </main>
+
+    <script src="js/ReceberAnimal.js"></script>
+</body>
+</html>

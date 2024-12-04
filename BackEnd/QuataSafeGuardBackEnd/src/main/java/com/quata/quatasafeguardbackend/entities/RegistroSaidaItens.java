@@ -18,4 +18,7 @@ public class RegistroSaidaItens {
     @ManyToOne
     @JoinColumn(name = "produtos_idProduto")
     private Produto produto;
+
+    public void setMotivo(String novoMotivo) {
+    }
 }

@@ -1,0 +1,2554 @@
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/DetalhesEmpresaDTO.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/DetalhesEmpresaDTO.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/DetalhesEmpresaDTO.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/DetalhesEmpresaDTO.java	
++++ /dev/null	
+@@ -1,19 +0,0 @@
+-package com.quata.quatasafeguardbackend.dto.empresa;
+-
+-public record DetalhesEmpresaDTO(
+-        Long id,
+-        String nomeFantasia,
+-        String razaoSocial,
+-        String site,
+-        String email,
+-        String cnpj,
+-        String endereco,
+-        String bairro,
+-        String cidade,
+-        String uf,
+-        String cep,
+-        String telefone,
+-        String logoGrande,
+-        String logoPequeno,
+-        String dataCriacao
+-) {}
+Index: Back/.idea/QuataSafeGuard.iml
+===================================================================
+diff --git a/Back/.idea/QuataSafeGuard.iml b/Back/.idea/QuataSafeGuard.iml
+deleted file mode 100644
+--- a/Back/.idea/QuataSafeGuard.iml	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Funcionario.java	
++++ /dev/null	
+@@ -1,38 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Funcionario {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idFuncionario;
+-    private String nome;
+-    private String cpf;
+-    private String cargo;
+-    private Double salario;
+-    private String permissoes;
+-    private String login;
+-    private String senha;
+-
+-
+-    @OneToMany(mappedBy = "funcionario")
+-    private List<AgendaVisita> visitas; // Novo relacionamento para gerenciar visitas
+-
+-    @OneToMany(mappedBy = "funcionario")
+-    private List<Doacao> doacoes;
+-
+-    @OneToMany(mappedBy = "funcionario")
+-    private List<Recebimento> recebimentos;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "caixa_id")
+-    private Caixa caixa;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/.mvn/wrapper/maven-wrapper.properties
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/.mvn/wrapper/maven-wrapper.properties b/Back/BackEnd/QuataSafeGuardBackEnd/.mvn/wrapper/maven-wrapper.properties
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/.mvn/wrapper/maven-wrapper.properties	
++++ /dev/null	
+@@ -1,19 +0,0 @@
+-# Licensed to the Apache Software Foundation (ASF) under one
+-# or more contributor license agreements.  See the NOTICE file
+-# distributed with this work for additional information
+-# regarding copyright ownership.  The ASF licenses this file
+-# to you under the Apache License, Version 2.0 (the
+-# "License"); you may not use this file except in compliance
+-# with the License.  You may obtain a copy of the License at
+-#
+-#   http://www.apache.org/licenses/LICENSE-2.0
+-#
+-# Unless required by applicable law or agreed to in writing,
+-# software distributed under the License is distributed on an
+-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-# KIND, either express or implied.  See the License for the
+-# specific language governing permissions and limitations
+-# under the License.
+-wrapperVersion=3.3.2
+-distributionType=only-script
+-distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.zip
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doacao.java	
++++ /dev/null	
+@@ -1,43 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Doacao {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long idDoacao;
+-
+-    @Column(nullable = false)
+-    private Date data;
+-
+-    private Double valor;
+-
+-    private Integer quantidadeItens;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "funcionario_id", nullable = false)
+-    private Funcionario funcionario;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "caixa_id", nullable = true)
+-    private Caixa caixa;
+-
+-    @OneToMany(mappedBy = "doacao", cascade = CascadeType.ALL, orphanRemoval = true)
+-    private List<Item> itensDoacao;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doador_id", nullable = true)
+-    private Doador doador;
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregarAnimal.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregarAnimal.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregarAnimal.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregarAnimal.java	
++++ /dev/null	
+@@ -1,39 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class EntregarAnimal {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idEntregaAnimal;
+-
+-    private Date dataEntrega;
+-
+-    private String statusEntrega;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doador_cpf") // Relacionamento com doador
+-    private Doador doador;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "agenda_id") // Relacionamento com agenda
+-    private Agenda agenda;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "funcionario_id") // Relacionamento com funcionário
+-    private Funcionario funcionario;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "animal_id") // Relacionamento com animal
+-    private Animal animal; // Associar o animal que está sendo entregue
+-}
+Index: Back/.idea/compiler.xml
+===================================================================
+diff --git a/Back/.idea/compiler.xml b/Back/.idea/compiler.xml
+deleted file mode 100644
+--- a/Back/.idea/compiler.xml	
++++ /dev/null	
+@@ -1,18 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="CompilerConfiguration">
+-    <annotationProcessing>
+-      <profile name="Maven default annotation processors profile" enabled="true">
+-        <sourceOutputDir name="target/generated-sources/annotations" />
+-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+-        <outputRelativeToContentRoot value="true" />
+-        <module name="QuataSafeGuardBackEnd" />
+-      </profile>
+-    </annotationProcessing>
+-  </component>
+-  <component name="JavacSettings">
+-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+-      <module name="QuataSafeGuardBackEnd" options="-parameters" />
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoacaoRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoacaoRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoacaoRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoacaoRepository.java	
++++ /dev/null	
+@@ -1,10 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Doacao;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-@Repository
+-public interface DoacaoRepository extends JpaRepository<Doacao, Long> {
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregarAnimalController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregarAnimalController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregarAnimalController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregarAnimalController.java	
++++ /dev/null	
+@@ -1,38 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.EntregarAnimal;
+-import com.quata.quatasafeguardbackend.services.EntregarAnimalService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-
+-import java.util.List;
+-
+-@RestController
+-@RequestMapping("/api/entregas")
+-public class EntregarAnimalController {
+-
+-    @Autowired
+-    private EntregarAnimalService entregarAnimalService;
+-
+-    // Registrar nova entrega
+-    @PostMapping
+-    public ResponseEntity<EntregarAnimal> registrarEntrega(@RequestBody EntregarAnimal entrega) {
+-        EntregarAnimal novaEntrega = entregarAnimalService.registrarEntrega(entrega);
+-        return ResponseEntity.ok(novaEntrega);
+-    }
+-
+-    // Listar entregas pendentes
+-    @GetMapping("/pendentes")
+-    public ResponseEntity<List<EntregarAnimal>> listarPendentes(@RequestParam String status) {
+-        List<EntregarAnimal> pendentes = entregarAnimalService.listarPendentes(status);
+-        return ResponseEntity.ok(pendentes);
+-    }
+-
+-    // Atualizar status da entrega
+-    @PatchMapping("/{id}/status")
+-    public ResponseEntity<EntregarAnimal> atualizarStatus(@PathVariable Integer id, @RequestParam String status) {
+-        EntregarAnimal entregaAtualizada = entregarAnimalService.atualizarStatus(id, status);
+-        return ResponseEntity.ok(entregaAtualizada);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Recebimento.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Recebimento.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Recebimento.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Recebimento.java	
++++ /dev/null	
+@@ -1,28 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Recebimento {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-    private Date data;
+-    private Double valor;
+-
+-    @ManyToOne
+-    @JoinColumn(name="funcionario_id")
+-    private Funcionario funcionario;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doador_id")
+-    private Doador doador;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Receptor.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Receptor.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Receptor.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Receptor.java	
++++ /dev/null	
+@@ -1,26 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Receptor {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id; // ID como chave primária
+-
+-    private String nome;
+-    private String email;
+-    private String telefone;
+-    private Integer idade;
+-
+-    @OneToMany(mappedBy = "receptor")
+-    private List<EntregaAnimal> entregas; // Lista de entregas associadas ao receptor
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AgendarEntregaController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AgendarEntregaController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AgendarEntregaController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AgendarEntregaController.java	
++++ /dev/null	
+@@ -1,37 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.Agenda;
+-import com.quata.quatasafeguardbackend.services.AgendarEntregaService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.format.annotation.DateTimeFormat;
+-import org.springframework.http.MediaType;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-import org.springframework.web.multipart.MultipartFile;
+-
+-import java.util.Date;
+-
+-@RestController
+-@RequestMapping("/api/agendamentos")
+-public class AgendarEntregaController {
+-
+-    @Autowired
+-    private AgendarEntregaService agendarEntregaService;
+-
+-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+-    public ResponseEntity<Agenda> agendarEntrega(
+-            @RequestParam String cpfDoador,
+-            @RequestParam String nomeAnimal,
+-            @RequestParam Integer idadeAnimal,
+-            @RequestParam String tipoAnimal,
+-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dataHora,
+-            @RequestParam String informacoes,
+-            @RequestPart("carteiraVacina") MultipartFile carteiraVacina) {
+-
+-        Agenda agenda = agendarEntregaService.agendarEntrega(
+-                cpfDoador, nomeAnimal, idadeAnimal, tipoAnimal, dataHora, informacoes, carteiraVacina
+-        );
+-
+-        return ResponseEntity.ok(agenda);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AnimalService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AnimalService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AnimalService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AnimalService.java	
++++ /dev/null	
+@@ -1,51 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.Animal;
+-import com.quata.quatasafeguardbackend.repositories.AnimalRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.List;
+-
+-@Service
+-public class AnimalService {
+-
+-    @Autowired
+-    private AnimalRepository animalRepository;
+-
+-    public Animal salvarAnimal(Animal animal) {
+-        return animalRepository.save(animal);
+-    }
+-
+-    public List<Animal> listarTodosAnimais() {
+-        return animalRepository.findAll();
+-    }
+-
+-    public List<Animal> listarAnimaisDisponiveis() {
+-        return animalRepository.findByDisponibilidade(true);
+-    }
+-
+-    public Animal buscarAnimalPorId(Integer id) {
+-        return animalRepository.findById(id)
+-                .orElseThrow(() -> new RuntimeException("Animal não encontrado!"));
+-    }
+-
+-    public Animal atualizarAnimal(Integer id, Animal animalAtualizado) {
+-        // Busca o animal existente no banco
+-        Animal animal = buscarAnimalPorId(id);
+-
+-        // Atualiza os campos do animal com os valores fornecidos
+-        animal.setNome(animalAtualizado.getNome());
+-        animal.setIdade(animalAtualizado.getIdade());
+-        animal.setTipo(animalAtualizado.getTipo()); // Atualize o campo "tipo"
+-        animal.setCarteiraVacina(animalAtualizado.getCarteiraVacina());
+-        animal.setDisponibilidade(animalAtualizado.getDisponibilidade());
+-
+-        // Salva o animal atualizado no banco
+-        return animalRepository.save(animal);
+-    }
+-
+-    public void deletarAnimal(Integer id) {
+-        animalRepository.deleteById(id);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/empresa_parametrizacao/Empresa.java	
++++ /dev/null	
+@@ -1,106 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities.empresa_parametrizacao;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.time.LocalDateTime;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-@Table(name = "parametrizacao")
+-public class Empresa {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long id;
+-
+-    @Column(name = "nome_fantasia", nullable = false)
+-    private String nomeFantasia;
+-
+-    @Column(name = "razao_social", nullable = false)
+-    private String razaoSocial;
+-
+-    @Column(name = "site")
+-    private String site;
+-
+-    @Column(name = "email")
+-    private String email;
+-
+-    @Column(name = "cnpj", unique = true)
+-    private String cnpj;
+-
+-    @Column(name = "endereco")
+-    private String endereco;
+-
+-    @Column(name = "bairro")
+-    private String bairro;
+-
+-    @Column(name = "cidade")
+-    private String cidade;
+-
+-    @Column(name = "uf")
+-    private String uf;
+-
+-    @Column(name = "cep")
+-    private String cep;
+-
+-    @Column(name = "tel")
+-    private String telefone;
+-
+-    @Column(name = "logo_grande")
+-    private String logoGrande;
+-
+-    @Column(name = "logo_pequeno")
+-    private String logoPequeno;
+-
+-    @Column(name = "data_criacao", nullable = true)
+-    private LocalDateTime dataCriacao;
+-
+-    public static boolean isCNPJ(String cnpj) {
+-        if (cnpj == null || cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {//regex par a verificar se os digitos sao sequenciais
+-            return false;
+-        }
+-
+-        try {
+-            int[] pesosPrimeiroDigito = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+-            int[] pesosSegundoDigito = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+-
+-            //calcula o primeiro digito verificador
+-            char digito13 = calcularDigito(cnpj, pesosPrimeiroDigito);
+-
+-            //calcula o segundo digito verificador
+-            char digito14 = calcularDigito(cnpj, pesosSegundoDigito);
+-
+-            //compara os dígitos calculados com os fornecidos
+-            return digito13 == cnpj.charAt(12) && digito14 == cnpj.charAt(13);
+-        } catch (Exception e) {
+-            return false;
+-        }
+-    }
+-
+-    private static char calcularDigito(String cnpj, int[] pesos) {
+-        int soma = 0;
+-        for (int i = 0; i < pesos.length; i++) {
+-            soma += (cnpj.charAt(i) - '0') * pesos[i];
+-        }
+-        int resto = soma % 11;
+-        return (resto < 2) ? '0' : (char) ((11 - resto) + '0');
+-    }
+-    public static String imprimeCNPJ(String cnpj) {
+-        if (cnpj == null || cnpj.length() != 14) {
+-            throw new IllegalArgumentException("CNPJ inválido: deve conter exatamente 14 dígitos.");
+-        }
+-        return String.format("%s.%s.%s/%s-%s",
+-                cnpj.substring(0, 2),
+-                cnpj.substring(2, 5),
+-                cnpj.substring(5, 8),
+-                cnpj.substring(8, 12),
+-                cnpj.substring(12, 14)
+-        );
+-    }
+-}
+-
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/test/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplicationTests.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/test/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplicationTests.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/test/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplicationTests.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/test/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplicationTests.java	
++++ /dev/null	
+@@ -1,13 +0,0 @@
+-package com.quata.quatasafeguardbackend;
+-
+-import org.junit.jupiter.api.Test;
+-import org.springframework.boot.test.context.SpringBootTest;
+-
+-@SpringBootTest
+-class QuataSafeGuardBackEndApplicationTests {
+-
+-    @Test
+-    void contextLoads() {
+-    }
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Item.java	
++++ /dev/null	
+@@ -1,25 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Item {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idItem;
+-    private Integer qtde;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "produtos_idProduto")
+-    private Produto produto;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doacao_id")
+-    private Doacao doacao;
+-}
+Index: Back/.idea/jarRepositories.xml
+===================================================================
+diff --git a/Back/.idea/jarRepositories.xml b/Back/.idea/jarRepositories.xml
+deleted file mode 100644
+--- a/Back/.idea/jarRepositories.xml	
++++ /dev/null	
+@@ -1,20 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RemoteRepositoriesConfiguration">
+-    <remote-repository>
+-      <option name="id" value="central" />
+-      <option name="name" value="Central Repository" />
+-      <option name="url" value="https://repo.maven.apache.org/maven2" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="central" />
+-      <option name="name" value="Maven Central repository" />
+-      <option name="url" value="https://repo1.maven.org/maven2" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="jboss.community" />
+-      <option name="name" value="JBoss Community repository" />
+-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+-    </remote-repository>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaVisitaRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaVisitaRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaVisitaRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaVisitaRepository.java	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.AgendaVisita;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-@Repository
+-public interface AgendaVisitaRepository extends JpaRepository<AgendaVisita, Integer> {
+-}
+Index: .idea/modules.xml
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	
++++ /dev/null	
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/QuataSafeGuard.iml" filepath="$PROJECT_DIR$/.idea/QuataSafeGuard.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doador.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doador.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doador.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Doador.java	
++++ /dev/null	
+@@ -1,28 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import jakarta.persistence.criteria.CriteriaBuilder;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Doador {
+-    @Id
+-    private String cpf;
+-    private String nome;
+-    private String email;
+-    private String telefone;
+-    private Integer idade;
+-
+-    @OneToMany(mappedBy = "doador")
+-    private List<Doacao> doacoes;
+-
+-    @OneToMany(mappedBy = "doador")
+-    private List<Recebimento> recebimentos;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AnimalRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AnimalRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AnimalRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AnimalRepository.java	
++++ /dev/null	
+@@ -1,13 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Animal;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-import java.util.List;
+-
+-@Repository
+-public interface AnimalRepository extends JpaRepository<Animal, Integer> {
+-
+-    List<Animal> findByDisponibilidade(Boolean disponibilidade);
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Vacina.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Vacina.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Vacina.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Vacina.java	
++++ /dev/null	
+@@ -1,27 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Vacina {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idVacina;
+-    private String nome;
+-    private String lote;
+-    private Date validade;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "carteira_vacina_id")
+-    private CarteiraVacina carteiraVacina;
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Produto.java	
++++ /dev/null	
+@@ -1,28 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Produto {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Long idProduto;
+-    private String nomeProduto;
+-    private String descricaoProduto;
+-    private Integer quantidadeEstoque;
+-
+-    @OneToMany(mappedBy = "produto")
+-    private List<Item> itens;
+-
+-    @OneToMany(mappedBy = "produto")
+-    private List<RegistroSaidaItens> registroSaidaItens;
+-
+-}
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/TipoAnimalRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/TipoAnimalRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/TipoAnimalRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/TipoAnimalRepository.java	
++++ /dev/null	
+@@ -1,12 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.TipoAnimal;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-import java.util.Optional;
+-
+-@Repository
+-public interface TipoAnimalRepository extends JpaRepository<TipoAnimal, Integer> {
+-    Optional<TipoAnimal> findByNome(String nome);
+-}
+Index: Back/.idea/encodings.xml
+===================================================================
+diff --git a/Back/.idea/encodings.xml b/Back/.idea/encodings.xml
+deleted file mode 100644
+--- a/Back/.idea/encodings.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Encoding">
+-    <file url="file://$PROJECT_DIR$/BackEnd/QuataSafeGuardBackEnd/src/main/java" charset="UTF-8" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/TipoAnimalController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/TipoAnimalController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/TipoAnimalController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/TipoAnimalController.java	
++++ /dev/null	
+@@ -1,25 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.TipoAnimal;
+-import com.quata.quatasafeguardbackend.repositories.TipoAnimalRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.GetMapping;
+-import org.springframework.web.bind.annotation.RequestMapping;
+-import org.springframework.web.bind.annotation.RestController;
+-
+-import java.util.List;
+-
+-@RestController
+-@RequestMapping("/api/tipos-animais")
+-public class TipoAnimalController {
+-
+-    @Autowired
+-    private TipoAnimalRepository tipoAnimalRepository;
+-
+-    @GetMapping
+-    public ResponseEntity<List<TipoAnimal>> listarTiposDeAnimais() {
+-        List<TipoAnimal> tipos = tipoAnimalRepository.findAll();
+-        return ResponseEntity.ok(tipos);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/pom.xml
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/pom.xml b/Back/BackEnd/QuataSafeGuardBackEnd/pom.xml
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/pom.xml	
++++ /dev/null	
+@@ -1,86 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+-    <modelVersion>4.0.0</modelVersion>
+-    <parent>
+-        <groupId>org.springframework.boot</groupId>
+-        <artifactId>spring-boot-starter-parent</artifactId>
+-        <version>3.3.5</version>
+-        <relativePath/> <!-- lookup parent from repository -->
+-    </parent>
+-    <groupId>com.quata</groupId>
+-    <artifactId>QuataSafeGuardBackEnd</artifactId>
+-    <version>0.0.1-SNAPSHOT</version>
+-    <name>QuataSafeGuardBackEnd</name>
+-    <description>QuataSafeGuardBackEnd</description>
+-    <url/>
+-    <licenses>
+-        <license/>
+-    </licenses>
+-    <developers>
+-        <developer/>
+-    </developers>
+-    <scm>
+-        <connection/>
+-        <developerConnection/>
+-        <tag/>
+-        <url/>
+-    </scm>
+-    <properties>
+-        <java.version>21</java.version>
+-    </properties>
+-    <dependencies>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-security</artifactId>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-validation</artifactId>
+-        </dependency>
+-
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-web</artifactId>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-web-services</artifactId>
+-        </dependency>
+-
+-        <dependency>
+-            <groupId>org.postgresql</groupId>
+-            <artifactId>postgresql</artifactId>
+-            <scope>runtime</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.boot</groupId>
+-            <artifactId>spring-boot-starter-test</artifactId>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.springframework.security</groupId>
+-            <artifactId>spring-security-test</artifactId>
+-            <scope>test</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.projectlombok</groupId>
+-            <artifactId>lombok</artifactId>
+-            <scope>provided</scope>
+-        </dependency>
+-    </dependencies>
+-
+-    <build>
+-        <plugins>
+-            <plugin>
+-                <groupId>org.springframework.boot</groupId>
+-                <artifactId>spring-boot-maven-plugin</artifactId>
+-            </plugin>
+-        </plugins>
+-    </build>
+-
+-</project>
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/RegistroSaidaItens.java	
++++ /dev/null	
+@@ -1,21 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class RegistroSaidaItens {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idRegistroSaidaItens;
+-    private Integer qtde;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "produtos_idProduto")
+-    private Produto produto;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Pagamento.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Pagamento.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Pagamento.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Pagamento.java	
++++ /dev/null	
+@@ -1,42 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Pagamento {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idPagamento;
+-
+-    @Temporal(TemporalType.DATE)
+-    private Date data;
+-
+-    private Double valor;
+-
+-    private String status;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "Funcionario_siFunc")
+-    private Funcionario funcionario;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "Agenda_idAgenda")
+-    private Agenda agenda;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "idDoacao")
+-    private Doacao doacao;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "idRecebimento")
+-    private Recebimento recebimento;
+-}
+\ No newline at end of file
+Index: Back/.idea/vcs.xml
+===================================================================
+diff --git a/Back/.idea/vcs.xml b/Back/.idea/vcs.xml
+deleted file mode 100644
+--- a/Back/.idea/vcs.xml	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/.idea/modules.xml
+===================================================================
+diff --git a/Back/.idea/modules.xml b/Back/.idea/modules.xml
+deleted file mode 100644
+--- a/Back/.idea/modules.xml	
++++ /dev/null	
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/QuataSafeGuard.iml" filepath="$PROJECT_DIR$/.idea/QuataSafeGuard.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EmpresaRepository.java	
++++ /dev/null	
+@@ -1,18 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.data.jpa.repository.Query;
+-import org.springframework.stereotype.Repository;
+-
+-import java.util.Optional;
+-
+-@Repository
+-public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
+-
+-    Optional<Empresa> findByCnpj(String cnpj);
+-    @Query("SELECT COUNT(e) > 0 FROM Empresa e")
+-    boolean existsAny();
+-
+-    Empresa findFirstByOrderByIdDesc();
+-}
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ProdutoRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ProdutoRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ProdutoRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/ProdutoRepository.java	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Produto;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-@Repository
+-public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregaAnimalController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregaAnimalController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregaAnimalController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EntregaAnimalController.java	
++++ /dev/null	
+@@ -1,45 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.EntregaAnimal;
+-import com.quata.quatasafeguardbackend.services.EntregaAnimalService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-
+-import java.time.LocalDate;
+-import java.util.List;
+-
+-@RestController
+-@RequestMapping("/entregas")
+-public class EntregaAnimalController {
+-
+-    @Autowired
+-    private EntregaAnimalService entregaAnimalService;
+-
+-    // Listar entregas pendentes
+-    @GetMapping("/pendentes")
+-    public ResponseEntity<List<EntregaAnimal>> listarPendentes() {
+-        return ResponseEntity.ok(entregaAnimalService.listarPendentes());
+-    }
+-
+-    // Buscar entregas por data
+-    @GetMapping("/data")
+-    public ResponseEntity<List<EntregaAnimal>> buscarPorData(@RequestParam String data) {
+-        LocalDate dataEntrega = LocalDate.parse(data); // Convertendo string para LocalDate
+-        return ResponseEntity.ok(entregaAnimalService.buscarPorData(dataEntrega));
+-    }
+-
+-    // Buscar entregas por ID do animal
+-    @GetMapping("/animal/{animalId}")
+-    public ResponseEntity<List<EntregaAnimal>> buscarPorAnimalId(@PathVariable Integer animalId) {
+-        return ResponseEntity.ok(entregaAnimalService.buscarPorAnimalId(animalId));
+-    }
+-
+-    // Atualizar status da entrega
+-    @PutMapping("/{id}/status")
+-    public ResponseEntity<EntregaAnimal> atualizarStatus(
+-            @PathVariable Integer id,
+-            @RequestParam String status) {
+-        return ResponseEntity.ok(entregaAnimalService.atualizarStatus(id, status));
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EmpresaService.java	
++++ /dev/null	
+@@ -1,110 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
+-import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
+-import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
+-import com.quata.quatasafeguardbackend.repositories.EmpresaRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.time.LocalDateTime;
+-import java.util.Optional;
+-import java.util.NoSuchElementException;
+-
+-@Service
+-public class EmpresaService {
+-    @Autowired
+-    private EmpresaRepository empresaRepository;
+-
+-    public Empresa getEmpresaById(Long id) {
+-        return empresaRepository.findById(id)
+-                .orElseThrow(() -> new NoSuchElementException("A empresa não foi encontrada"));
+-    }
+-
+-    public Optional<Empresa> getEmpresaByCnpj(String cnpj) {
+-        return empresaRepository.findByCnpj(cnpj);
+-    }
+-
+-    public Empresa saveEmpresa(Empresa empresa) {
+-        if (empresaRepository.existsAny()) {
+-            throw new IllegalStateException("A parametrização já foi realizada.");
+-        }
+-        if (!Empresa.isCNPJ(empresa.getCnpj())) {
+-            throw new IllegalArgumentException("CNPJ inválido.");
+-        }
+-        Optional<Empresa> empresaExistente = getEmpresaByCnpj(empresa.getCnpj());
+-        if (empresaExistente.isPresent()) {
+-            throw new IllegalStateException("Uma empresa com este CNPJ já existe: " + Empresa.imprimeCNPJ(empresa.getCnpj()));
+-        }
+-        empresa.setDataCriacao(LocalDateTime.now());
+-        return empresaRepository.save(empresa);
+-    }
+-
+-    public boolean deleteEmpresa(String cnpj) {
+-        Optional<Empresa> empresa = getEmpresaByCnpj(cnpj);
+-
+-        if (empresa.isEmpty()) {
+-            return false;
+-        }
+-
+-        try {
+-            empresaRepository.deleteById(empresa.get().getId());
+-            return true;
+-        } catch (Exception e) {
+-            return false;
+-        }
+-    }
+-    public Empresa atualizarEmpresa(Empresa empresa) {
+-        if (!Empresa.isCNPJ(empresa.getCnpj())) {
+-            throw new IllegalArgumentException("CNPJ inválido.");
+-        }
+-
+-        Empresa empresaExistente = empresaRepository.findByCnpj(empresa.getCnpj())
+-                .orElseThrow(() -> new NoSuchElementException("A empresa não foi encontrada."));
+-
+-        empresaExistente.setRazaoSocial(empresa.getRazaoSocial());
+-        empresaExistente.setNomeFantasia(empresa.getNomeFantasia());
+-        empresaExistente.setCnpj(empresa.getCnpj());
+-        empresaExistente.setLogoPequeno(empresa.getLogoPequeno());
+-        empresaExistente.setLogoGrande(empresa.getLogoGrande());
+-        empresaExistente.setEndereco(empresa.getEndereco());
+-        empresaExistente.setBairro(empresa.getBairro());
+-        empresaExistente.setCidade(empresa.getCidade());
+-        empresaExistente.setUf(empresa.getUf());
+-        empresaExistente.setTelefone(empresa.getTelefone());
+-        empresaExistente.setSite(empresa.getSite());
+-
+-        return empresaRepository.save(empresaExistente);
+-    }
+-
+-    public DetalhesEmpresaDTO getDetalhesEmpresa() {
+-        Empresa empresa = empresaRepository.findFirstByOrderByIdDesc();
+-        if (empresa == null) {
+-            throw new NoSuchElementException("Nenhuma empresa encontrada.");
+-        }
+-
+-        return new DetalhesEmpresaDTO(
+-                empresa.getId(),
+-                empresa.getNomeFantasia(),
+-                empresa.getRazaoSocial(),
+-                empresa.getSite(),
+-                empresa.getEmail(),
+-                empresa.getCnpj(),
+-                empresa.getEndereco(),
+-                empresa.getBairro(),
+-                empresa.getCidade(),
+-                empresa.getUf(),
+-                empresa.getCep(),
+-                empresa.getTelefone(),
+-                empresa.getLogoGrande(),
+-                empresa.getLogoPequeno(),
+-                empresa.getDataCriacao() != null ? empresa.getDataCriacao().toString() : null
+-        );
+-    }
+-
+-
+-    public VerificaParametrizacaoDTO verificarParametrizacao() {
+-        boolean existe = empresaRepository.existsAny();
+-        return new VerificaParametrizacaoDTO(existe);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/ProdutoService.java	
++++ /dev/null	
+@@ -1,53 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.Produto;
+-import com.quata.quatasafeguardbackend.repositories.ProdutoRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.List;
+-import java.util.NoSuchElementException;
+-
+-
+-@Service
+-public class ProdutoService {
+-
+-    @Autowired
+-    private ProdutoRepository produtoRepository;
+-
+-    public Produto saveProduto(Produto produto) {
+-        return produtoRepository.save(produto);
+-    }
+-
+-    public boolean deleteProduto(Long id) {
+-        try {
+-            produtoRepository.deleteById(id);
+-        } catch (Exception e)
+-        {
+-            return false;
+-        }
+-        return true;
+-    }
+-
+-    public Produto alterarProduto(Long id,Produto produto) {
+-        Produto prod = this.produtoRepository.findById(id).orElse(null);
+-        if(prod != null)
+-        {
+-            prod.setNomeProduto(produto.getNomeProduto());
+-            prod.setDescricaoProduto(produto.getDescricaoProduto());
+-            prod.setItens(produto.getItens());
+-            prod.setQuantidadeEstoque(produto.getQuantidadeEstoque());
+-            prod.setRegistroSaidaItens(produto.getRegistroSaidaItens());
+-            return produtoRepository.save(prod);
+-        }
+-        return null;
+-    }
+-
+-    public Produto getByIdProduto (Long id) {
+-        return produtoRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Não encontrado"));
+-    }
+-
+-    public List<Produto> getAllProdutos() {
+-        return produtoRepository.findAll();
+-    }
+-}
+Index: .idea/QuataSafeGuard.iml
+===================================================================
+diff --git a/.idea/QuataSafeGuard.iml b/.idea/QuataSafeGuard.iml
+deleted file mode 100644
+--- a/.idea/QuataSafeGuard.iml	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/VerificaParametrizacaoDTO.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/VerificaParametrizacaoDTO.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/VerificaParametrizacaoDTO.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/dto/empresa/VerificaParametrizacaoDTO.java	
++++ /dev/null	
+@@ -1,3 +0,0 @@
+-package com.quata.quatasafeguardbackend.dto.empresa;
+-
+-public record VerificaParametrizacaoDTO(boolean existe) {}
+Index: Back/.idea/misc.xml
+===================================================================
+diff --git a/Back/.idea/misc.xml b/Back/.idea/misc.xml
+deleted file mode 100644
+--- a/Back/.idea/misc.xml	
++++ /dev/null	
+@@ -1,14 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="MavenProjectsManager">
+-    <option name="originalFiles">
+-      <list>
+-        <option value="$PROJECT_DIR$/BackEnd/QuataSafeGuardBackEnd/pom.xml" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="corretto-22" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregaAnimalRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregaAnimalRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregaAnimalRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregaAnimalRepository.java	
++++ /dev/null	
+@@ -1,23 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.EntregaAnimal;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.data.jpa.repository.Query;
+-import org.springframework.stereotype.Repository;
+-
+-import java.time.LocalDate;
+-import java.util.List;
+-
+-@Repository
+-public interface EntregaAnimalRepository extends JpaRepository<EntregaAnimal, Integer> {
+-
+-    // Buscar todas as entregas com status diferente de "Concluído"
+-    @Query("SELECT e FROM EntregaAnimal e WHERE e.status <> 'Concluído'")
+-    List<EntregaAnimal> findPendentes();
+-
+-    // Filtrar entregas por data
+-    List<EntregaAnimal> findByDataEntrega(LocalDate dataEntrega);
+-
+-    // Filtrar entregas pelo ID do animal
+-    List<EntregaAnimal> findByAnimalId(Integer animalId);
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/SecurityConfig.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/SecurityConfig.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/SecurityConfig.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/SecurityConfig.java	
++++ /dev/null	
+@@ -1,22 +0,0 @@
+-package com.quata.quatasafeguardbackend.config;
+-
+-import org.springframework.context.annotation.Bean;
+-import org.springframework.context.annotation.Configuration;
+-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+-import org.springframework.security.web.SecurityFilterChain;
+-
+-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+-
+-@Configuration
+-public class SecurityConfig {
+-
+-    @Bean
+-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+-        http
+-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF
+-                .authorizeHttpRequests(auth -> auth
+-                        .anyRequest().permitAll() // Permite acesso a todos os endpoints
+-                );
+-        return http.build();
+-    }
+-}
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AgendarEntregaService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AgendarEntregaService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AgendarEntregaService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/AgendarEntregaService.java	
++++ /dev/null	
+@@ -1,75 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.*;
+-import com.quata.quatasafeguardbackend.repositories.*;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-import org.springframework.web.multipart.MultipartFile;
+-
+-import java.io.IOException;
+-import java.nio.file.Files;
+-import java.nio.file.Path;
+-import java.nio.file.Paths;
+-import java.util.Date;
+-import java.util.Optional;
+-
+-@Service
+-public class AgendarEntregaService {
+-
+-    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/carteiras/";
+-
+-    @Autowired
+-    private DoadorRepository doadorRepository;
+-
+-    @Autowired
+-    private AnimalRepository animalRepository;
+-
+-    @Autowired
+-    private AgendaRepository agendaRepository;
+-
+-    public Agenda agendarEntrega(String cpfDoador, String nomeAnimal, Integer idadeAnimal, String tipoAnimal,
+-                                 Date dataHora, String informacoes, MultipartFile carteiraVacina) {
+-        // Verificar se o CPF do Doador existe no banco
+-        Optional<Doador> doadorOpt = doadorRepository.findByCpf(cpfDoador);
+-        if (doadorOpt.isEmpty()) {
+-            throw new IllegalArgumentException("Doador não encontrado com o CPF informado.");
+-        }
+-        Doador doador = doadorOpt.get();
+-
+-        // Criar e salvar o registro do animal
+-        Animal animal = new Animal();
+-        animal.setNome(nomeAnimal);
+-        animal.setIdade(idadeAnimal);
+-        animal.setTipo(tipoAnimal);
+-        animal.setDisponibilidade(false); // O animal não estará disponível após o agendamento
+-        animal = animalRepository.save(animal);
+-
+-        // Salvar a imagem da carteira de vacinação no servidor
+-        String carteiraPath = salvarCarteiraVacina(carteiraVacina);
+-
+-        // Criar e salvar o agendamento
+-        Agenda agenda = new Agenda();
+-        agenda.setDataHora(dataHora);
+-        agenda.setMotivo(informacoes);
+-        agenda.setCarteiraVacinaPath(carteiraPath);
+-        agenda.setDoador(doador);
+-        agenda.setAnimal(animal);
+-
+-        return agendaRepository.save(agenda);
+-    }
+-
+-    private String salvarCarteiraVacina(MultipartFile carteiraVacina) {
+-        try {
+-            String originalFilename = carteiraVacina.getOriginalFilename();
+-            String novoNome = System.currentTimeMillis() + "_" + originalFilename;
+-            Path caminho = Paths.get(UPLOAD_DIR + novoNome);
+-
+-            Files.createDirectories(caminho.getParent());
+-            Files.write(caminho, carteiraVacina.getBytes());
+-
+-            return caminho.toString();
+-        } catch (IOException e) {
+-            throw new RuntimeException("Erro ao salvar a carteira de vacinação.", e);
+-        }
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AnimalController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AnimalController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AnimalController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/AnimalController.java	
++++ /dev/null	
+@@ -1,49 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.Animal;
+-import com.quata.quatasafeguardbackend.services.AnimalService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-
+-import java.util.List;
+-
+-@RestController
+-@RequestMapping("/animais")
+-public class AnimalController {
+-
+-    @Autowired
+-    private AnimalService animalService;
+-
+-    @PostMapping
+-    public ResponseEntity<Animal> salvarAnimal(@RequestBody Animal animal) {
+-        Animal novoAnimal = animalService.salvarAnimal(animal);
+-        return ResponseEntity.ok(novoAnimal);
+-    }
+-
+-    @GetMapping
+-    public ResponseEntity<List<Animal>> listarTodosAnimais() {
+-        return ResponseEntity.ok(animalService.listarTodosAnimais());
+-    }
+-
+-    @GetMapping("/disponiveis")
+-    public ResponseEntity<List<Animal>> listarAnimaisDisponiveis() {
+-        return ResponseEntity.ok(animalService.listarAnimaisDisponiveis());
+-    }
+-
+-    @GetMapping("/{id}")
+-    public ResponseEntity<Animal> buscarAnimalPorId(@PathVariable Integer id) {
+-        return ResponseEntity.ok(animalService.buscarAnimalPorId(id));
+-    }
+-
+-    @PutMapping("/{id}")
+-    public ResponseEntity<Animal> atualizarAnimal(@PathVariable Integer id, @RequestBody Animal animal) {
+-        return ResponseEntity.ok(animalService.atualizarAnimal(id, animal));
+-    }
+-
+-    @DeleteMapping("/{id}")
+-    public ResponseEntity<Void> deletarAnimal(@PathVariable Integer id) {
+-        animalService.deletarAnimal(id);
+-        return ResponseEntity.noContent().build();
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoadorRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoadorRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoadorRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/DoadorRepository.java	
++++ /dev/null	
+@@ -1,13 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Doador;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-import java.util.Optional;
+-
+-
+-
+-@Repository
+-public interface DoadorRepository extends JpaRepository<Doador, Integer> {
+-    Optional<Doador> findByCpf(String cpf);
+-}
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/AgendaRepository.java	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Agenda;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-@Repository
+-public interface AgendaRepository extends JpaRepository<Agenda, Integer> {
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregarAnimalService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregarAnimalService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregarAnimalService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregarAnimalService.java	
++++ /dev/null	
+@@ -1,50 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.Animal;
+-import com.quata.quatasafeguardbackend.entities.EntregarAnimal;
+-import com.quata.quatasafeguardbackend.repositories.AnimalRepository;
+-import com.quata.quatasafeguardbackend.repositories.EntregarAnimalRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.Date;
+-import java.util.List;
+-import java.util.NoSuchElementException;
+-
+-@Service
+-public class EntregarAnimalService {
+-
+-    @Autowired
+-    private EntregarAnimalRepository entregarAnimalRepository;
+-
+-    @Autowired
+-    private AnimalRepository animalRepository;
+-
+-    // Registrar uma nova entrega
+-    public EntregarAnimal registrarEntrega(EntregarAnimal entrega) {
+-        entrega.setStatusEntrega("Pendente");
+-        entrega.setDataEntrega(new Date());
+-        return entregarAnimalRepository.save(entrega);
+-    }
+-
+-    // Listar entregas pendentes
+-    public List<EntregarAnimal> listarPendentes(String status) {
+-        return entregarAnimalRepository.findByStatusEntregaAndDataEntrega(status, new Date());
+-    }
+-
+-    // Atualizar status da entrega e disponibilidade do animal
+-    public EntregarAnimal atualizarStatus(Integer idEntrega, String novoStatus) {
+-        EntregarAnimal entrega = entregarAnimalRepository.findById(idEntrega)
+-                .orElseThrow(() -> new NoSuchElementException("Entrega não encontrada com o ID: " + idEntrega));
+-
+-        entrega.setStatusEntrega(novoStatus);
+-
+-        if ("Concluído".equals(novoStatus)) {
+-            Animal animal = entrega.getAnimal();
+-            animal.setDisponibilidade(false); // Marca o animal como "indisponível"
+-            animalRepository.save(animal);
+-        }
+-
+-        return entregarAnimalRepository.save(entrega);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/.gitignore
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/.gitignore b/Back/BackEnd/QuataSafeGuardBackEnd/.gitignore
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/.gitignore	
++++ /dev/null	
+@@ -1,33 +0,0 @@
+-HELP.md
+-target/
+-!.mvn/wrapper/maven-wrapper.jar
+-!**/src/main/**/target/
+-!**/src/test/**/target/
+-
+-### STS ###
+-.apt_generated
+-.classpath
+-.factorypath
+-.project
+-.settings
+-.springBeans
+-.sts4-cache
+-
+-### IntelliJ IDEA ###
+-.idea
+-*.iws
+-*.iml
+-*.ipr
+-
+-### NetBeans ###
+-/nbproject/private/
+-/nbbuild/
+-/dist/
+-/nbdist/
+-/.nb-gradle/
+-build/
+-!**/src/main/**/build/
+-!**/src/test/**/build/
+-
+-### VS Code ###
+-.vscode/
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java	
++++ /dev/null	
+@@ -1,13 +0,0 @@
+-package com.quata.quatasafeguardbackend;
+-
+-import org.springframework.boot.SpringApplication;
+-import org.springframework.boot.autoconfigure.SpringBootApplication;
+-
+-@SpringBootApplication
+-public class QuataSafeGuardBackEndApplication {
+-
+-    public static void main(String[] args) {
+-        SpringApplication.run(QuataSafeGuardBackEndApplication.class, args);
+-    }
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EspacoRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EspacoRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EspacoRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EspacoRepository.java	
++++ /dev/null	
+@@ -1,14 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.Espaco;
+-import com.quata.quatasafeguardbackend.entities.TipoAnimal;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-import java.util.Optional;
+-
+-@Repository
+-public interface EspacoRepository extends JpaRepository<Espaco, Integer> {
+-
+-    Optional<Espaco> findByTipoAnimalAndDisponivel(TipoAnimal tipoAnimal, boolean disponivel);
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Animal.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Animal.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Animal.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Animal.java	
++++ /dev/null	
+@@ -1,28 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Animal {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-
+-    private String nome; // Nome do animal
+-    private Integer idade; // Idade do animal
+-    private String tipo; // Tipo do animal (ex: "Gato", "Cachorro")
+-
+-    @ManyToOne
+-    @JoinColumn(name = "carteira_vacina_id")
+-    private CarteiraVacina carteiraVacina;
+-
+-    private Boolean disponibilidade = true; // Disponível por padrão
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/DoacaoController.java	
++++ /dev/null	
+@@ -1,34 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.entities.Doacao;
+-import com.quata.quatasafeguardbackend.services.DoacaoService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.HttpStatus;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.PostMapping;
+-import org.springframework.web.bind.annotation.RequestBody;
+-import org.springframework.web.bind.annotation.RequestMapping;
+-import org.springframework.web.bind.annotation.RestController;
+-
+-import java.util.NoSuchElementException;
+-
+-@RestController
+-@RequestMapping("/api/doacoes")
+-public class DoacaoController {
+-
+-    @Autowired
+-    private DoacaoService doacaoService;
+-
+-    //lucas ortiz
+-    @PostMapping
+-    public ResponseEntity<Doacao> registrarDoacao(@RequestBody Doacao doacao) {
+-        try {
+-            Doacao novaDoacao = doacaoService.registrarDoacao(doacao);
+-            return ResponseEntity.ok(novaDoacao);
+-        } catch (IllegalArgumentException e) {
+-            return ResponseEntity.badRequest().body(null);
+-        } catch (NoSuchElementException e) {
+-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+-        }
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/TipoAnimal.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/TipoAnimal.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/TipoAnimal.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/TipoAnimal.java	
++++ /dev/null	
+@@ -1,21 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class TipoAnimal {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-
+-    private String nome;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregaAnimal.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregaAnimal.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregaAnimal.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/EntregaAnimal.java	
++++ /dev/null	
+@@ -1,29 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.time.LocalDate;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class EntregaAnimal {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id; // ID da entrega
+-
+-    private LocalDate dataEntrega; // Data da entrega
+-    private String status = "Pendente"; // Status inicial da entrega
+-
+-    @ManyToOne
+-    @JoinColumn(name = "animal_id", nullable = false)
+-    private Animal animal; // Relacionamento com Animal
+-
+-    @ManyToOne
+-    @JoinColumn(name = "receptor_id", nullable = false)
+-    private Receptor receptor; // Relacionamento com Receptor
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/mvnw.cmd
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/mvnw.cmd b/Back/BackEnd/QuataSafeGuardBackEnd/mvnw.cmd
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/mvnw.cmd	
++++ /dev/null	
+@@ -1,149 +0,0 @@
+-<# : batch portion
+-@REM ----------------------------------------------------------------------------
+-@REM Licensed to the Apache Software Foundation (ASF) under one
+-@REM or more contributor license agreements.  See the NOTICE file
+-@REM distributed with this work for additional information
+-@REM regarding copyright ownership.  The ASF licenses this file
+-@REM to you under the Apache License, Version 2.0 (the
+-@REM "License"); you may not use this file except in compliance
+-@REM with the License.  You may obtain a copy of the License at
+-@REM
+-@REM    http://www.apache.org/licenses/LICENSE-2.0
+-@REM
+-@REM Unless required by applicable law or agreed to in writing,
+-@REM software distributed under the License is distributed on an
+-@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+-@REM KIND, either express or implied.  See the License for the
+-@REM specific language governing permissions and limitations
+-@REM under the License.
+-@REM ----------------------------------------------------------------------------
+-
+-@REM ----------------------------------------------------------------------------
+-@REM Apache Maven Wrapper startup batch script, version 3.3.2
+-@REM
+-@REM Optional ENV vars
+-@REM   MVNW_REPOURL - repo url base for downloading maven distribution
+-@REM   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
+-@REM   MVNW_VERBOSE - true: enable verbose log; others: silence the output
+-@REM ----------------------------------------------------------------------------
+-
+-@IF "%__MVNW_ARG0_NAME__%"=="" (SET __MVNW_ARG0_NAME__=%~nx0)
+-@SET __MVNW_CMD__=
+-@SET __MVNW_ERROR__=
+-@SET __MVNW_PSMODULEP_SAVE=%PSModulePath%
+-@SET PSModulePath=
+-@FOR /F "usebackq tokens=1* delims==" %%A IN (`powershell -noprofile "& {$scriptDir='%~dp0'; $script='%__MVNW_ARG0_NAME__%'; icm -ScriptBlock ([Scriptblock]::Create((Get-Content -Raw '%~f0'))) -NoNewScope}"`) DO @(
+-  IF "%%A"=="MVN_CMD" (set __MVNW_CMD__=%%B) ELSE IF "%%B"=="" (echo %%A) ELSE (echo %%A=%%B)
+-)
+-@SET PSModulePath=%__MVNW_PSMODULEP_SAVE%
+-@SET __MVNW_PSMODULEP_SAVE=
+-@SET __MVNW_ARG0_NAME__=
+-@SET MVNW_USERNAME=
+-@SET MVNW_PASSWORD=
+-@IF NOT "%__MVNW_CMD__%"=="" (%__MVNW_CMD__% %*)
+-@echo Cannot start maven from wrapper >&2 && exit /b 1
+-@GOTO :EOF
+-: end batch / begin powershell #>
+-
+-$ErrorActionPreference = "Stop"
+-if ($env:MVNW_VERBOSE -eq "true") {
+-  $VerbosePreference = "Continue"
+-}
+-
+-# calculate distributionUrl, requires .mvn/wrapper/maven-wrapper.properties
+-$distributionUrl = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionUrl
+-if (!$distributionUrl) {
+-  Write-Error "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
+-}
+-
+-switch -wildcard -casesensitive ( $($distributionUrl -replace '^.*/','') ) {
+-  "maven-mvnd-*" {
+-    $USE_MVND = $true
+-    $distributionUrl = $distributionUrl -replace '-bin\.[^.]*$',"-windows-amd64.zip"
+-    $MVN_CMD = "mvnd.cmd"
+-    break
+-  }
+-  default {
+-    $USE_MVND = $false
+-    $MVN_CMD = $script -replace '^mvnw','mvn'
+-    break
+-  }
+-}
+-
+-# apply MVNW_REPOURL and calculate MAVEN_HOME
+-# maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
+-if ($env:MVNW_REPOURL) {
+-  $MVNW_REPO_PATTERN = if ($USE_MVND) { "/org/apache/maven/" } else { "/maven/mvnd/" }
+-  $distributionUrl = "$env:MVNW_REPOURL$MVNW_REPO_PATTERN$($distributionUrl -replace '^.*'+$MVNW_REPO_PATTERN,'')"
+-}
+-$distributionUrlName = $distributionUrl -replace '^.*/',''
+-$distributionUrlNameMain = $distributionUrlName -replace '\.[^.]*$','' -replace '-bin$',''
+-$MAVEN_HOME_PARENT = "$HOME/.m2/wrapper/dists/$distributionUrlNameMain"
+-if ($env:MAVEN_USER_HOME) {
+-  $MAVEN_HOME_PARENT = "$env:MAVEN_USER_HOME/wrapper/dists/$distributionUrlNameMain"
+-}
+-$MAVEN_HOME_NAME = ([System.Security.Cryptography.MD5]::Create().ComputeHash([byte[]][char[]]$distributionUrl) | ForEach-Object {$_.ToString("x2")}) -join ''
+-$MAVEN_HOME = "$MAVEN_HOME_PARENT/$MAVEN_HOME_NAME"
+-
+-if (Test-Path -Path "$MAVEN_HOME" -PathType Container) {
+-  Write-Verbose "found existing MAVEN_HOME at $MAVEN_HOME"
+-  Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+-  exit $?
+-}
+-
+-if (! $distributionUrlNameMain -or ($distributionUrlName -eq $distributionUrlNameMain)) {
+-  Write-Error "distributionUrl is not valid, must end with *-bin.zip, but found $distributionUrl"
+-}
+-
+-# prepare tmp dir
+-$TMP_DOWNLOAD_DIR_HOLDER = New-TemporaryFile
+-$TMP_DOWNLOAD_DIR = New-Item -Itemtype Directory -Path "$TMP_DOWNLOAD_DIR_HOLDER.dir"
+-$TMP_DOWNLOAD_DIR_HOLDER.Delete() | Out-Null
+-trap {
+-  if ($TMP_DOWNLOAD_DIR.Exists) {
+-    try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+-    catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+-  }
+-}
+-
+-New-Item -Itemtype Directory -Path "$MAVEN_HOME_PARENT" -Force | Out-Null
+-
+-# Download and Install Apache Maven
+-Write-Verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+-Write-Verbose "Downloading from: $distributionUrl"
+-Write-Verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
+-
+-$webclient = New-Object System.Net.WebClient
+-if ($env:MVNW_USERNAME -and $env:MVNW_PASSWORD) {
+-  $webclient.Credentials = New-Object System.Net.NetworkCredential($env:MVNW_USERNAME, $env:MVNW_PASSWORD)
+-}
+-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+-$webclient.DownloadFile($distributionUrl, "$TMP_DOWNLOAD_DIR/$distributionUrlName") | Out-Null
+-
+-# If specified, validate the SHA-256 sum of the Maven distribution zip file
+-$distributionSha256Sum = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionSha256Sum
+-if ($distributionSha256Sum) {
+-  if ($USE_MVND) {
+-    Write-Error "Checksum validation is not supported for maven-mvnd. `nPlease disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties."
+-  }
+-  Import-Module $PSHOME\Modules\Microsoft.PowerShell.Utility -Function Get-FileHash
+-  if ((Get-FileHash "$TMP_DOWNLOAD_DIR/$distributionUrlName" -Algorithm SHA256).Hash.ToLower() -ne $distributionSha256Sum) {
+-    Write-Error "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised. If you updated your Maven version, you need to update the specified distributionSha256Sum property."
+-  }
+-}
+-
+-# unzip and move
+-Expand-Archive "$TMP_DOWNLOAD_DIR/$distributionUrlName" -DestinationPath "$TMP_DOWNLOAD_DIR" | Out-Null
+-Rename-Item -Path "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" -NewName $MAVEN_HOME_NAME | Out-Null
+-try {
+-  Move-Item -Path "$TMP_DOWNLOAD_DIR/$MAVEN_HOME_NAME" -Destination $MAVEN_HOME_PARENT | Out-Null
+-} catch {
+-  if (! (Test-Path -Path "$MAVEN_HOME" -PathType Container)) {
+-    Write-Error "fail to move MAVEN_HOME"
+-  }
+-} finally {
+-  try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+-  catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+-}
+-
+-Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/CarteiraVacina.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/CarteiraVacina.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/CarteiraVacina.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/CarteiraVacina.java	
++++ /dev/null	
+@@ -1,41 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class CarteiraVacina {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-    private String lote;
+-    private Date data;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "animal_id")
+-    private Animal animal;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "vacina_id")
+-    private Vacina vacina;
+-
+-    @OneToMany(mappedBy = "carteiraVacina", cascade = CascadeType.ALL)
+-    private List<Vacina> vacinas;
+-
+-
+-    public boolean isAtualizada() {
+-        if (vacinas == null || vacinas.isEmpty()) {
+-            return false;
+-        }
+-        return vacinas.stream().anyMatch(vacina -> vacina.getValidade() != null && vacina.getValidade().after(new java.util.Date()));
+-    }
+-
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Agenda.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Agenda.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Agenda.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Agenda.java	
++++ /dev/null	
+@@ -1,32 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Agenda {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idAgenda;
+-
+-    private Date dataHora; // Data e hora do agendamento
+-    private String motivo; // Informações adicionais (ex: "Nome do animal")
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doador_id") // Relacionamento com Doador
+-    private Doador doador;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "animal_id") // Relacionamento com Animal
+-    private Animal animal;
+-
+-    private String carteiraVacinaPath; // Caminho da carteira de vacinação
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregarAnimalRepository.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregarAnimalRepository.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregarAnimalRepository.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/repositories/EntregarAnimalRepository.java	
++++ /dev/null	
+@@ -1,15 +0,0 @@
+-package com.quata.quatasafeguardbackend.repositories;
+-
+-import com.quata.quatasafeguardbackend.entities.EntregarAnimal;
+-import org.springframework.data.jpa.repository.JpaRepository;
+-import org.springframework.stereotype.Repository;
+-
+-import java.util.Date;
+-import java.util.List;
+-
+-@Repository
+-public interface EntregarAnimalRepository extends JpaRepository<EntregarAnimal, Integer> {
+-
+-    // Filtrar entregas por status e data
+-    List<EntregarAnimal> findByStatusEntregaAndDataEntrega(String status, Date data);
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/AgendaVisita.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/AgendaVisita.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/AgendaVisita.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/AgendaVisita.java	
++++ /dev/null	
+@@ -1,34 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class AgendaVisita {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idAgendaVisita;
+-
+-    private Date dataHora; // Data e hora da visita
+-    private String motivo; // Motivo da visita (ex: adoção)
+-
+-    @ManyToOne
+-    @JoinColumn(name = "funcionario_id") // Funcionário responsável pela visita
+-    private Funcionario funcionario;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "doador_id") // Doador relacionado à visita
+-    private Doador doador;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "animal_id") // Animal relacionado à visita
+-    private Animal animal;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Caixa.java	
++++ /dev/null	
+@@ -1,30 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-import java.util.Date;
+-import java.util.List;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Caixa {
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-    private Date dataAbertura;
+-    private Date dataFechamento;
+-    private Double valorInicial;
+-    private Double valorFechamento;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "funcionario_id")
+-    private Funcionario funcionario;
+-
+-    @OneToMany(mappedBy = "caixa")
+-    private List<Funcionario> funcionarios;
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/controllers/EmpresaController.java	
++++ /dev/null	
+@@ -1,62 +0,0 @@
+-package com.quata.quatasafeguardbackend.controllers;
+-
+-import com.quata.quatasafeguardbackend.dto.empresa.DetalhesEmpresaDTO;
+-import com.quata.quatasafeguardbackend.dto.empresa.VerificaParametrizacaoDTO;
+-import com.quata.quatasafeguardbackend.entities.empresa_parametrizacao.Empresa;
+-import com.quata.quatasafeguardbackend.services.EmpresaService;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.http.HttpStatus;
+-import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
+-
+-import java.util.NoSuchElementException;
+-
+-@RestController
+-@RequestMapping(value = "api/empresa")
+-public class EmpresaController {
+-    @Autowired
+-    private EmpresaService empresaService;
+-
+-    @GetMapping(value = "get-empresa/{id}")
+-    public ResponseEntity<Empresa> getEmpresa(@PathVariable Long id) {
+-        Empresa empresa = empresaService.getEmpresaById(id);
+-        return ResponseEntity.ok().body(empresa);
+-    }
+-
+-    @PostMapping(value = "create-empresa")
+-    public ResponseEntity<Object> createEmpresa(@RequestBody Empresa empresa) {
+-        Empresa empresa1 = empresaService.saveEmpresa(empresa);
+-        return ResponseEntity.ok().body(empresa1);
+-    }
+-
+-    @PutMapping(value="update-empresa")
+-    public ResponseEntity<Object> updateEmpresa(@RequestBody Empresa empresa) {
+-        Empresa empresa1 = empresaService.atualizarEmpresa(empresa);
+-        return ResponseEntity.ok().body(empresa1);
+-    }
+-
+-    @GetMapping("/detalhes")
+-    public ResponseEntity<DetalhesEmpresaDTO> obterDetalhesEmpresa() {
+-        try {
+-            DetalhesEmpresaDTO detalhesEmpresa = empresaService.getDetalhesEmpresa();
+-            return ResponseEntity.ok(detalhesEmpresa);
+-        } catch (NoSuchElementException e) {
+-            return ResponseEntity.notFound().build();
+-        }
+-    }
+-
+-    @GetMapping("/verifica-param")
+-    public ResponseEntity<VerificaParametrizacaoDTO> verificarParametrizacao() {
+-        VerificaParametrizacaoDTO existe = empresaService.verificarParametrizacao();
+-        return ResponseEntity.ok(existe);
+-    }
+-
+-    @DeleteMapping(value = "delete-empresa/{cnpj}")
+-    public ResponseEntity<Object> deleteEmpresa(@PathVariable String cnpj) {
+-        if (empresaService.deleteEmpresa(cnpj)) {
+-            return ResponseEntity.ok().body("Empresa excluída com sucesso");
+-        } else {
+-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Erro ao excluir empresa");
+-        }
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/DoacaoService.java	
++++ /dev/null	
+@@ -1,41 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.Doacao;
+-import com.quata.quatasafeguardbackend.entities.Item;
+-import com.quata.quatasafeguardbackend.entities.Produto;
+-import com.quata.quatasafeguardbackend.repositories.DoacaoRepository;
+-import com.quata.quatasafeguardbackend.repositories.ProdutoRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.util.NoSuchElementException;
+-
+-@Service
+-public class DoacaoService {
+-
+-    @Autowired
+-    private DoacaoRepository doacaoRepository;
+-
+-    @Autowired
+-    private ProdutoRepository produtoRepository;
+-
+-    //lucas ortiz - registrar doacao recursos
+-    public Doacao registrarDoacao(Doacao doacao) {
+-        if (doacao.getItensDoacao() == null || doacao.getItensDoacao().isEmpty()) {
+-            throw new IllegalArgumentException("A doação deve conter pelo menos um item.");
+-        }
+-
+-        for (Item item : doacao.getItensDoacao()) {
+-            Produto produto = produtoRepository.findById(item.getProduto().getIdProduto())
+-                    .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
+-
+-            // atualiza o estoque do produto
+-            produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQtde());
+-            produtoRepository.save(produto);
+-
+-            // aq vai associar o item a doacao
+-            item.setDoacao(doacao);
+-        }
+-        return doacaoRepository.save(doacao);
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Espaco.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Espaco.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Espaco.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/entities/Espaco.java	
++++ /dev/null	
+@@ -1,23 +0,0 @@
+-package com.quata.quatasafeguardbackend.entities;
+-
+-import jakarta.persistence.*;
+-import lombok.Getter;
+-import lombok.NoArgsConstructor;
+-import lombok.Setter;
+-
+-@Entity
+-@Getter
+-@Setter
+-@NoArgsConstructor
+-public class Espaco {
+-
+-    @Id
+-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer id;
+-
+-    @ManyToOne
+-    @JoinColumn(name = "tipoAnimal_id")
+-    private TipoAnimal tipoAnimal;
+-
+-    private boolean disponivel; // Indica se o espaço está disponível
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregaAnimalService.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregaAnimalService.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregaAnimalService.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/services/EntregaAnimalService.java	
++++ /dev/null	
+@@ -1,45 +0,0 @@
+-package com.quata.quatasafeguardbackend.services;
+-
+-import com.quata.quatasafeguardbackend.entities.EntregaAnimal;
+-import com.quata.quatasafeguardbackend.repositories.EntregaAnimalRepository;
+-import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.stereotype.Service;
+-
+-import java.time.LocalDate;
+-import java.util.List;
+-import java.util.Optional;
+-
+-@Service
+-public class EntregaAnimalService {
+-
+-    @Autowired
+-    private EntregaAnimalRepository entregaAnimalRepository;
+-
+-    // Buscar todas as entregas pendentes
+-    public List<EntregaAnimal> listarPendentes() {
+-        return entregaAnimalRepository.findPendentes();
+-    }
+-
+-    // Filtrar entregas por data
+-    public List<EntregaAnimal> buscarPorData(LocalDate dataEntrega) {
+-        return entregaAnimalRepository.findByDataEntrega(dataEntrega);
+-    }
+-
+-    // Filtrar entregas pelo ID do animal
+-    public List<EntregaAnimal> buscarPorAnimalId(Integer animalId) {
+-        return entregaAnimalRepository.findByAnimalId(animalId);
+-    }
+-
+-    // Atualizar status da entrega
+-    public EntregaAnimal atualizarStatus(Integer id, String novoStatus) {
+-        Optional<EntregaAnimal> entregaOptional = entregaAnimalRepository.findById(id);
+-
+-        if (entregaOptional.isPresent()) {
+-            EntregaAnimal entrega = entregaOptional.get();
+-            entrega.setStatus(novoStatus);
+-            return entregaAnimalRepository.save(entrega);
+-        } else {
+-            throw new RuntimeException("Entrega não encontrada com ID: " + id);
+-        }
+-    }
+-}
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/resources/application.properties
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/resources/application.properties b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/resources/application.properties
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/resources/application.properties	
++++ /dev/null	
+@@ -1,12 +0,0 @@
+-spring.datasource.url=jdbc:postgresql://junction.proxy.rlwy.net:30903/railway
+-spring.datasource.username=postgres
+-spring.datasource.password=tULPJiWZwpgPVFKEvXLVQfSDafxRFyGL
+-spring.datasource.driver-class-name=org.postgresql.Driver
+-
+-spring.jpa.hibernate.ddl-auto=update
+-spring.jpa.show-sql=true
+-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+-
+-spring.servlet.multipart.enabled=true
+-spring.servlet.multipart.max-file-size=10MB
+-spring.servlet.multipart.max-request-size=10MB
+Index: .idea/misc.xml
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+deleted file mode 100644
+--- a/.idea/misc.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="20" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/CorsConfig.java
+===================================================================
+diff --git a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/CorsConfig.java b/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/CorsConfig.java
+deleted file mode 100644
+--- a/Back/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/config/CorsConfig.java	
++++ /dev/null	
+@@ -1,25 +0,0 @@
+-package com.quata.quatasafeguardbackend.config;
+-
+-import org.springframework.context.annotation.Bean;
+-import org.springframework.context.annotation.Configuration;
+-import org.springframework.lang.NonNull;
+-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+-
+-@Configuration
+-public class CorsConfig {
+-
+-    @Bean
+-    public WebMvcConfigurer corsConfigurer() {
+-        return new WebMvcConfigurer() {
+-            @Override
+-            public void addCorsMappings(@NonNull CorsRegistry registry) {
+-                registry.addMapping("/**")
+-                        .allowedOrigins("http://127.0.0.1:5500", "http://localhost:5500")
+-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+-                        .allowedHeaders("*")
+-                        .allowCredentials(true);
+-            }
+-        };
+-    }
+-}
+\ No newline at end of file
+Index: Back/.idea/.gitignore
+===================================================================
+diff --git a/Back/.idea/.gitignore b/Back/.idea/.gitignore
+deleted file mode 100644
+--- a/Back/.idea/.gitignore	
++++ /dev/null	
+@@ -1,8 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml

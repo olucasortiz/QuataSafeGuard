@@ -1,0 +1,139 @@
+Index: BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.quata.quatasafeguardbackend;\r\n\r\nimport org.springframework.boot.SpringApplication;\r\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\r\n\r\n@SpringBootApplication\r\npublic class QuataSafeGuardBackEndApplication {\r\n\r\n    public static void main(String[] args) {\r\n        SpringApplication.run(QuataSafeGuardBackEndApplication.class, args);\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java
+--- a/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java	
++++ b/BackEnd/QuataSafeGuardBackEnd/src/main/java/com/quata/quatasafeguardbackend/QuataSafeGuardBackEndApplication.java	
+@@ -10,4 +10,4 @@
+         SpringApplication.run(QuataSafeGuardBackEndApplication.class, args);
+     }
+ 
+-}
++}
+\ No newline at end of file
+Index: BackEnd/QuataSafeGuardBackEnd/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n    <parent>\r\n        <groupId>org.springframework.boot</groupId>\r\n        <artifactId>spring-boot-starter-parent</artifactId>\r\n        <version>3.3.5</version>\r\n        <relativePath/> <!-- lookup parent from repository -->\r\n    </parent>\r\n    <groupId>com.quata</groupId>\r\n    <artifactId>QuataSafeGuardBackEnd</artifactId>\r\n    <version>0.0.1-SNAPSHOT</version>\r\n    <name>QuataSafeGuardBackEnd</name>\r\n    <description>QuataSafeGuardBackEnd</description>\r\n    <url/>\r\n    <licenses>\r\n        <license/>\r\n    </licenses>\r\n    <developers>\r\n        <developer/>\r\n    </developers>\r\n    <scm>\r\n        <connection/>\r\n        <developerConnection/>\r\n        <tag/>\r\n        <url/>\r\n    </scm>\r\n    <properties>\r\n        <java.version>21</java.version>\r\n    </properties>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-security</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-validation</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web</artifactId>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-web-services</artifactId>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.postgresql</groupId>\r\n            <artifactId>postgresql</artifactId>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.boot</groupId>\r\n            <artifactId>spring-boot-starter-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework.security</groupId>\r\n            <artifactId>spring-security-test</artifactId>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n            <scope>provided</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.springframework.boot</groupId>\r\n                <artifactId>spring-boot-maven-plugin</artifactId>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n\r\n</project>\r\n
+===================================================================
+diff --git a/BackEnd/QuataSafeGuardBackEnd/pom.xml b/BackEnd/QuataSafeGuardBackEnd/pom.xml
+--- a/BackEnd/QuataSafeGuardBackEnd/pom.xml	
++++ b/BackEnd/QuataSafeGuardBackEnd/pom.xml	
+@@ -12,6 +12,7 @@
+     <artifactId>QuataSafeGuardBackEnd</artifactId>
+     <version>0.0.1-SNAPSHOT</version>
+     <name>QuataSafeGuardBackEnd</name>
++
+     <description>QuataSafeGuardBackEnd</description>
+     <url/>
+     <licenses>
+@@ -28,6 +29,8 @@
+     </scm>
+     <properties>
+         <java.version>21</java.version>
++        <maven.compiler.source>21</maven.compiler.source>
++        <maven.compiler.target>21</maven.compiler.target>
+     </properties>
+     <dependencies>
+         <dependency>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"2fe103f8-e46e-4cd4-b2e9-04dc2bc952c2\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/QuataSafeGuard.iml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"HigorGermano\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2pDOauTVdcnEgLl8tKSagmesgMj\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;JavaScript Debug.AgendarAnimal.html.executor&quot;: &quot;Run&quot;,\r\n    &quot;JavaScript Debug.EntregarAnimal.html.executor&quot;: &quot;Run&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15039062&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01\" />\r\n        <option value=\"jdk-22-openjdk-22-4caba194b151-f504ca98\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"2fe103f8-e46e-4cd4-b2e9-04dc2bc952c2\" name=\"Changes\" comment=\"\" />\r\n      <created>1732297251557</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1732297251557</updated>\r\n      <workItem from=\"1732297255069\" duration=\"2000\" />\r\n      <workItem from=\"1732991931298\" duration=\"1097000\" />\r\n      <workItem from=\"1732993056735\" duration=\"120000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,88 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="AutoImportSettings">
+-    <option name="autoReloadType" value="SELECTIVE" />
+-  </component>
+-  <component name="ChangeListManager">
+-    <list default="true" id="2fe103f8-e46e-4cd4-b2e9-04dc2bc952c2" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/QuataSafeGuard.iml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-    </list>
+-    <option name="SHOW_DIALOG" value="false" />
+-    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-    <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="Git.Settings">
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="HigorGermano" />
+-      </map>
+-    </option>
+-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+-  </component>
+-  <component name="ProjectColorInfo">{
+-  &quot;associatedIndex&quot;: 3
+-}</component>
+-  <component name="ProjectId" id="2pDOauTVdcnEgLl8tKSagmesgMj" />
+-  <component name="ProjectViewState">
+-    <option name="hideEmptyMiddlePackages" value="true" />
+-    <option name="showLibraryContents" value="true" />
+-  </component>
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
+-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+-    &quot;JavaScript Debug.AgendarAnimal.html.executor&quot;: &quot;Run&quot;,
+-    &quot;JavaScript Debug.EntregarAnimal.html.executor&quot;: &quot;Run&quot;,
+-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.15039062&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
+   }
+ }</component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+-      </set>
+-    </attachedChunks>
+-  </component>
+-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-  <component name="TaskManager">
+-    <task active="true" id="Default" summary="Default task">
+-      <changelist id="2fe103f8-e46e-4cd4-b2e9-04dc2bc952c2" name="Changes" comment="" />
+-      <created>1732297251557</created>
+-      <option name="number" value="Default" />
+-      <option name="presentableId" value="Default" />
+-      <updated>1732297251557</updated>
+-      <workItem from="1732297255069" duration="2000" />
+-      <workItem from="1732991931298" duration="1097000" />
+-      <workItem from="1732993056735" duration="120000" />
+-    </task>
+-    <servers />
+-  </component>
+-  <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="3" />
+-  </component>
+-  <component name="XSLT-Support.FileAssociations.UIState">
+-    <expand />
+-    <select />
+-  </component>
+ </project>
+\ No newline at end of file

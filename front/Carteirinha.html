@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Aplicação de Vacinas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/listaAnimal.css">
+    <link rel="stylesheet" href="css/carteirinha.css">
+</head>
+<body>
+    <!-- Barra Fixa -->
+    <header class="navbar">
+        <a href="index.html" class="navbar-logo">QuataSafeGuard</a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main id="form-vacina" class="container">
+        <h1>Carteirinha do Animal</h1>
+        <form id="vacinaForm">
+            <div id="animalDetails" ></div>
+
+            <h2>Aplicar Vacina</h2>
+
+            <!-- vacina -->
+             <div class="form-group">
+                 <label for="select-vacina">Vacina:</label>
+                 <select id="select-vacina" name="vacina" required>
+                     <option value="" disabled selected>Selecione a vacina</option>
+                </select>
+            </div>
+
+            <!-- data e hora -->
+            <div class="form-group">
+                <label for="data" >Data:</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+            
+            <button type="submit">Adicionar Vacina</button>
+        </form>
+
+        <table id="carteirinhaDetails">
+        </table>
+    </main>
+    <script src="js/carteirinha.js"></script>
+</body>
+</html>

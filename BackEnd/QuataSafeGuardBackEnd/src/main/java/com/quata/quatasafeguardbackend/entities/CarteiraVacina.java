@@ -5,27 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Table(name = "carteira_vacina")
 public class CarteiraVacina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String lote;
-    private Date data;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
+    @OneToOne
     private Animal animal;
 
-    @ManyToOne
-    @JoinColumn(name = "vacina_id")
-    private Vacina vacina;
-
-
+//    public List<Vacina> getVacinas() {
+//
 }

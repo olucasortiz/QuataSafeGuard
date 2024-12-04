@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Caixa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gestão de Caixa</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Abrir Caixa</h2>
+            <form id="form-abrir-caixa">
+                <label for="saldoInicial">Saldo Inicial:</label>
+                <input type="number" id="saldoInicial" name="saldoInicial" required>
+                <button type="submit">Abrir Caixa</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Atualizar Caixa</h2>
+            <form id="form-atualizar-caixa">
+                <label for="caixa-id">ID do Caixa:</label>
+                <input type="number" id="caixa-id" name="caixa-id" required>
+
+                <label for="valor-atualizado">Valor Atualizado:</label>
+                <input type="number" id="valor-atualizado" name="valor-atualizado" required>
+                <button type="submit">Atualizar</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Fechar Caixa</h2>
+            <form id="form-fechar-caixa">
+                <label for="caixa-id-fechar">ID do Caixa:</label>
+                <input type="number" id="caixa-id-fechar" name="caixa-id-fechar" required>
+
+                <label for="valor-fechamento">Valor de Fechamento:</label>
+                <input type="number" id="valor-fechamento" name="valor-fechamento" required>
+                <button type="submit">Fechar Caixa</button>
+            </form>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Doadores</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gestão de Doadores</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cadastrar Doador</h2>
+            <form id="form-cadastrar-doador">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+        <section>
+            <h2>Buscar Doador</h2>
+            <form id="form-buscar-doador">
+                <label for="cpf-buscar">CPF:</label>
+                <input type="text" id="cpf-buscar" name="cpf-buscar" required>
+                <button type="submit">Buscar</button>
+            </form>
+            <div id="resultado-busca"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

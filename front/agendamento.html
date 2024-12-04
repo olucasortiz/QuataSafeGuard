@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Visitas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Agendamento de Visitas</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Agendar Visita</h2>
+            <form id="form-agendar-visita">
+                <label for="dataHora">Data e Hora:</label>
+                <input type="datetime-local" id="dataHora" name="dataHora" required>
+
+                <label for="motivo">Motivo:</label>
+                <input type="text" id="motivo" name="motivo" required>
+
+                <label for="funcionarioId">ID do Funcionário:</label>
+                <input type="number" id="funcionarioId" name="funcionarioId" required>
+
+                <label for="animalId">ID do Animal:</label>
+                <input type="number" id="animalId" name="animalId">
+
+                <button type="submit">Agendar</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Buscar Visita</h2>
+            <form id="form-buscar-visita">
+                <label for="visita-id">ID da Visita:</label>
+                <input type="number" id="visita-id" name="visita-id" required>
+                <button type="submit">Buscar</button>
+            </form>
+            <div id="resultado-visita"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

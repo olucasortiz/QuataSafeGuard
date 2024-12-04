@@ -7,39 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Agendamento de Visitas</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Agendar Visita</h2>
-            <form id="form-agendar-visita">
-                <label for="dataHora">Data e Hora:</label>
-                <input type="datetime-local" id="dataHora" name="dataHora" required>
+        
+        <!-- Formulário para criar um novo agendamento -->
+        <form id="agendar-visita-form">
+            <h2>Criar Agendamento</h2>
+            <label for="dataHora">Data e Hora:</label>
+            <input type="datetime-local" id="dataHora" required>
 
-                <label for="motivo">Motivo:</label>
-                <input type="text" id="motivo" name="motivo" required>
+            <label for="motivo">Motivo:</label>
+            <input type="text" id="motivo" required>
 
-                <label for="funcionarioId">ID do Funcionário:</label>
-                <input type="number" id="funcionarioId" name="funcionarioId" required>
+            <label for="funcionario">Funcionário:</label>
+            <select id="funcionario" required></select>
 
-                <label for="animalId">ID do Animal:</label>
-                <input type="number" id="animalId" name="animalId">
+            <label for="receptor">Receptor:</label>
+            <select id="receptor" required></select>
 
-                <button type="submit">Agendar</button>
-            </form>
+            <label for="animal">Animal:</label>
+            <select id="animal" required></select>
+
+            <button type="submit">Agendar</button>
+        </form>
+
+        <!-- Lista de agendamentos -->
+        <section id="lista-agendamentos">
+            <h2>Agendamentos</h2>
+            <ul id="agendamentos"></ul>
         </section>
-
-        <section>
-            <h2>Buscar Visita</h2>
-            <form id="form-buscar-visita">
-                <label for="visita-id">ID da Visita:</label>
-                <input type="number" id="visita-id" name="visita-id" required>
-                <button type="submit">Buscar</button>
-            </form>
-            <div id="resultado-visita"></div>
-        </section>
-    </main>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

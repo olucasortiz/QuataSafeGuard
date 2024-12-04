@@ -160,3 +160,102 @@ async function fecharCaixa(event) {
 document.getElementById("abrirCaixaForm").addEventListener("submit", abrirCaixa);
 document.getElementById("atualizarCaixaForm").addEventListener("submit", atualizarCaixa);
 document.getElementById("fecharCaixaForm").addEventListener("submit", fecharCaixa);
+
+const baseUrl = "http://localhost:8080/api";
+
+// Carregar dados iniciais
+window.onload = async () => {
+    await carregarFuncionarios();
+    await carregarReceptores();
+    await carregarAnimaisDisponiveis();
+    await listarAgendamentos();
+};
+
+// Função para carregar a lista de funcionários
+async function carregarFuncionarios() {
+    const response = await fetch(`${baseUrl}/funcionarios`);
+    const funcionarios = await response.json();
+    const funcionarioSelect = document.getElementById("funcionario");
+    funcionarios.forEach(func => {
+        const option = document.createElement("option");
+        option.value = func.id;
+        option.textContent = func.nome;
+        funcionarioSelect.appendChild(option);
+    });
+}
+
+// Função para carregar a lista de receptores
+async function carregarReceptores() {
+    const response = await fetch(`${baseUrl}/receptores`);
+    const receptores = await response.json();
+    const receptorSelect = document.getElementById("receptor");
+    receptores.forEach(receptor => {
+        const option = document.createElement("option");
+        option.value = receptor.id;
+        option.textContent = receptor.nome;
+        receptorSelect.appendChild(option);
+    });
+}
+
+// Função para carregar a lista de animais disponíveis
+async function carregarAnimaisDisponiveis() {
+    const response = await fetch(`${baseUrl}/animais/disponiveis`);
+    const animais = await response.json();
+    const animalSelect = document.getElementById("animal");
+    animais.forEach(animal => {
+        const option = document.createElement("option");
+        option.value = animal.id;
+        option.textContent = animal.nome;
+        animalSelect.appendChild(option);
+    });
+}
+
+// Função para listar todos os agendamentos
+async function listarAgendamentos() {
+    const response = await fetch(`${baseUrl}/agendas`);
+    const agendamentos = await response.json();
+    const listaAgendamentos = document.getElementById("agendamentos");
+    listaAgendamentos.innerHTML = "";
+
+    agendamentos.forEach(agenda => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <strong>Data e Hora:</strong> ${new Date(agenda.dataHora).toLocaleString()}<br>
+            <strong>Motivo:</strong> ${agenda.motivo}<br>
+            <strong>Funcionário:</strong> ${agenda.funcionario.nome}<br>
+            <strong>Receptor:</strong> ${agenda.receptor.nome}<br>
+            <strong>Animal:</strong> ${agenda.animal.nome}<br>
+            <strong>Status:</strong> ${agenda.status}
+        `;
+        listaAgendamentos.appendChild(li);
+    });
+}
+
+// Função para criar um novo agendamento
+document.getElementById("agendar-visita-form").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const dataHora = document.getElementById("dataHora").value;
+    const motivo = document.getElementById("motivo").value;
+    const funcionarioId = document.getElementById("funcionario").value;
+    const receptorId = document.getElementById("receptor").value;
+    const animalId = document.getElementById("animal").value;
+
+    const novoAgendamento = {
+        dataHora,
+        motivo,
+        status: "Pendente",
+        funcionario: { id: funcionarioId },
+        receptor: { id: receptorId },
+        animal: { id: animalId }
+    };
+
+    await fetch(`${baseUrl}/agendas/agendar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novoAgendamento)
+    });
+
+    document.getElementById("agendar-visita-form").reset();
+    await listarAgendamentos();
+};

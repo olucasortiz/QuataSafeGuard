@@ -15,12 +15,17 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+<<<<<<< HEAD
     @GetMapping(value = "/get-produto/{id}")
+=======
+    @GetMapping(value = "get-produto/{id}")
+>>>>>>> branch-ortiz
     public ResponseEntity<Produto> getProduto(@PathVariable Long id) {
         Produto produto = produtoService.getByIdProduto(id);
         return ResponseEntity.ok().body(produto);
     }
 
+<<<<<<< HEAD
     @PostMapping(value = "/create-produto")
     public ResponseEntity<Object> createProduto(@RequestBody Produto produto) {
         Produto produto1 = produtoService.saveProduto(produto);
@@ -34,6 +39,21 @@ public class ProdutoController {
     }
 
     @DeleteMapping(value = "/delete-produto/{id}")
+=======
+    @PostMapping(value = "create-produto")
+    public ResponseEntity<Object> createProduto(@RequestBody Produto produto) {
+        Produto produto1 = produtoService.saveProduto(produto);
+        return ResponseEntity.ok().body(produto1);
+    }
+
+    @PutMapping(value="update-produto")
+    public ResponseEntity<Object> updateProduto(@RequestBody Produto produto) {
+        Produto produto1 = produtoService.alterarProduto(produto.getIdProduto(), produto);
+        return ResponseEntity.ok().body(produto1);
+    }
+
+    @DeleteMapping(value = "delete-produto/{id}")
+>>>>>>> branch-ortiz
     public ResponseEntity<Object> deleteProduto(@PathVariable Long id) {
         if (produtoService.deleteProduto(id)) {
             return ResponseEntity.ok().body("Produto excluído com sucesso");
@@ -42,7 +62,11 @@ public class ProdutoController {
         }
     }
 
+<<<<<<< HEAD
     @GetMapping(value = "/get-all-produto")
+=======
+    @GetMapping(value = "get-all-produto")
+>>>>>>> branch-ortiz
     public ResponseEntity<List<Produto>> getAllProdutos() {
         List<Produto> produtos = produtoService.getAllProdutos();
 

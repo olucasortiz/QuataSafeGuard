@@ -74,4 +74,8 @@ public class RegistroSaidaItensController {
             return ResponseEntity.notFound().build();
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch-ortiz
 }

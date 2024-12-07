@@ -232,3 +232,14 @@ button:hover {
     color: green;
     font-weight: bold;
 }
+
+.input-error {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    display: block;
+}

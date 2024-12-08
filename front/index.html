@@ -4,109 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuataSafeGuard - Home</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Reutilizando o mesmo CSS -->
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Estilo para a barra de navegação fixa */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--primary-color); /* Cor primária do tema */
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Nome da ONG no centro */
-        .navbar-logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+        /* Estilo adicional para o container de apresentação */
+        .presentation-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            background-color: white;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            flex: 1;
         }
 
-        /* Estilo do menu no canto esquerdo */
-        .menu-container {
-            position: relative; /* Garante que o menu dropdown seja posicionado em relação ao container */
-        }
-
-        .menu-button {
-            background-color: white;
+        .presentation-container h1 {
             color: var(--primary-color);
-            border: none;
-            font-size: 1.5rem;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
+            margin-bottom: 15px;
         }
 
-        .menu-button:hover {
-            background-color: var(--secondary-color);
-            color: white;
+        .presentation-container p {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        .menu-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%; /* Ajustado para ficar diretamente abaixo do botão */
-            left: 0;
-            background-color: white;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            z-index: 1000;
+        .presentation-container img {
+            width: 200px; /* Aumenta o tamanho da imagem */
+            height: 200px; /* Define a altura para ser igual à largura */
+            border-radius: 50%; /* Faz a imagem ficar redonda */
+            margin-bottom: 20px;
+            object-fit: cover; /* Garante que a imagem fique bem ajustada no círculo */
+            border: 4px solid var(--primary-color); /* Adiciona uma borda */
         }
 
-        /* Corrigido para manter o menu aberto enquanto o mouse está sobre o menu ou o botão */
-        .menu-container:hover .menu-dropdown {
-            display: block;
-        }
-
-        .menu-dropdown a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: var(--primary-color);
-        }
-
-        .menu-dropdown a:hover {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        /* Estilo do login e cadastro no canto direito */
-        .auth-container {
-            flex: 0;
-        }
-
-        .auth-container button {
-            background-color: white;
-            color: var(--primary-color);
-            border: none;
-            padding: 10px 15px;
-            margin-left: 10px;
-            cursor: pointer;
-            border-radius: 5px;
+        .facebook-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
             font-size: 1rem;
-        }
-
-        .auth-container button:hover {
-            background-color: var(--secondary-color);
+            background-color: #3b5998; /* Azul padrão do Facebook */
             color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
-        /* Fundo com tema */
-        body {
-            background-color: #f7f9fc; /* Fundo claro */
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            padding-top: 80px; /* Compensar a barra fixa */
+        .facebook-link:hover {
+            background-color: #2d4373; /* Azul mais escuro */
         }
     </style>
 </head>
@@ -119,16 +65,36 @@
             <div class="menu-dropdown">
                 <a href="AgendarAnimal.html">Agendar Animal</a>
                 <a href="EntregarAnimal.html">Entregar Animal</a>
+                <a href="AnimalTela.html">Cadastrar Animal</a>
             </div>
         </div>
 
         <!-- Nome da ONG no centro -->
-        <div class="navbar-logo">QuataSafeGuard</div>
+        <a href="index.html" class="navbar-logo">QuataSafeGuard</a>
 
         <!-- Login e Cadastro no canto direito -->
         <div class="auth-container">
             <button onclick="window.location.href='login.html'">Login</button>
             <button onclick="window.location.href='cadastro.html'">Cadastro</button>
+        </div>
+    </div>
+
+    <!-- Seção de Apresentação -->
+    <div class="container">
+        <!-- Container de Apresentação -->
+        <div class="presentation-container">
+            <img src="Ong/LogoQuata.jpg" alt="Logo QuataSafeGuard">
+            <h1>Bem-vindo à QuataSafeGuard</h1>
+            <p>
+                Somos um grupo de protetores voluntários, localizados em Quatá, SP, Brasil, dedicados a ajudar animais abandonados. Nosso trabalho é movido por amor, cuidado e o compromisso de criar um futuro melhor para os nossos amigos de quatro patas.
+            </p>
+            <p>
+                Se você quer ajudar, adotar ou saber mais sobre nós, não deixe de nos acompanhar!
+            </p>
+            <!-- Botão para o Facebook -->
+            <a href="https://www.facebook.com/protetoresdequata" target="_blank" class="facebook-link">
+                Visite nosso Facebook
+            </a>
         </div>
     </div>
 </body>

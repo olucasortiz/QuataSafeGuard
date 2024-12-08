@@ -37,5 +37,5 @@ public class CarteiraVacina {
         }
         return vacinas.stream().anyMatch(vacina -> vacina.getValidade() != null && vacina.getValidade().after(new java.util.Date()));
     }
-
+    private String carteiraVacinaPath;
 }

@@ -17,10 +17,11 @@ public class Animal {
 
     private String nome; // Nome do animal
     private Integer idade; // Idade do animal
-    private String tipo; // Tipo do animal (ex: "Gato", "Cachorro")
+    private String tipo; // Tipo do animal (ex: "Gato", "Cachorro")7private char sexo
 
-    @ManyToOne
-    @JoinColumn(name = "carteira_vacina_id")
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "carteira_vacina_id", referencedColumnName = "id")
     private CarteiraVacina carteiraVacina;
 
     private Boolean disponibilidade = true; // Disponível por padrão

@@ -10,11 +10,10 @@ document.getElementById("form-cadastrar-animal").addEventListener("submit", asyn
 
     let isValid = true;
 
-    // Limpar mensagens de erro
+
     document.querySelectorAll(".error-message").forEach((el) => (el.textContent = ""));
     document.querySelectorAll("input, select").forEach((el) => el.classList.remove("input-error"));
 
-    // Validações simples
     if (!nome) {
         document.getElementById("nome-error").textContent = "O nome é obrigatório.";
         document.getElementById("nome").classList.add("input-error");

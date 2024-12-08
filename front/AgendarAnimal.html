@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Entrega de Animais</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/imask"></script> <!-- Biblioteca para máscaras -->
 </head>
 <body>
     <!-- Barra Fixa -->
@@ -20,18 +21,21 @@
             <div class="form-group">
                 <label for="cpf-doador">CPF do Doador:</label>
                 <input type="text" id="cpf-doador" name="cpfDoador" placeholder="Digite seu CPF" required>
+                <small class="error-message">CPF inválido</small>
             </div>
 
             <!-- Nome do Animal -->
             <div class="form-group">
                 <label for="nome-animal">Nome do Animal:</label>
                 <input type="text" id="nome-animal" name="nomeAnimal" placeholder="Digite o nome do animal" required>
+                <small class="error-message">Campo obrigatório</small>
             </div>
 
             <!-- Idade do Animal -->
             <div class="form-group">
                 <label for="idade-animal">Idade do Animal:</label>
                 <input type="number" id="idade-animal" name="idadeAnimal" placeholder="Digite a idade do animal (em anos)" required>
+                <small class="error-message">Idade inválida</small>
             </div>
 
             <!-- Tipo de Animal -->
@@ -42,12 +46,14 @@
                     <option value="Cachorro">Cachorro</option>
                     <option value="Gato">Gato</option>
                 </select>
+                <small class="error-message">Campo obrigatório</small>
             </div>
 
             <!-- Data e Hora -->
             <div class="form-group">
                 <label for="data-hora">Data e Hora da Entrega:</label>
                 <input type="datetime-local" id="data-hora" name="dataHora" required>
+                <small class="error-message">Campo obrigatório</small>
             </div>
 
             <!-- Informações Adicionais -->
@@ -60,6 +66,7 @@
             <div class="form-group">
                 <label for="carteira-vacina">Upload da Carteira de Vacinação:</label>
                 <input type="file" id="carteira-vacina" name="carteiraVacina" accept="image/*" required>
+                <small class="error-message">Envio obrigatório</small>
             </div>
 
             <!-- Botão de Enviar -->

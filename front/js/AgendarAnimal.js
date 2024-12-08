@@ -1,12 +1,15 @@
 const form = document.getElementById("form-agendamento");
 const BASE_URL = "http://localhost:8080/api/agendamentos";
 
-
+// Aplicar máscara ao CPF
+const cpfInput = document.getElementById("cpf-doador");
+IMask(cpfInput, { mask: "000.000.000-00" });
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const cpfDoador = document.getElementById("cpf-doador").value.trim();
+    // Obter os valores do formulário
+    const cpfDoador = cpfInput.value.replace(/\D/g, ""); // Remove pontos e traços
     const nomeAnimal = document.getElementById("nome-animal").value.trim();
     const idadeAnimal = parseInt(document.getElementById("idade-animal").value.trim());
     const tipoAnimal = document.getElementById("tipo-animal").value.trim();
@@ -34,7 +37,6 @@ form.addEventListener("submit", async (event) => {
     formData.append("dataHora", dataHora);
     formData.append("informacoes", informacoes);
     formData.append("carteiraVacina", carteiraVacina);
-    
 
     try {
         const response = await fetch(BASE_URL, {

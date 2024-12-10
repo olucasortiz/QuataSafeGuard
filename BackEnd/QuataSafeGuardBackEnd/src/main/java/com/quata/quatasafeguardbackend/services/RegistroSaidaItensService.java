@@ -39,7 +39,7 @@ public class RegistroSaidaItensService {
     }
 
     public List<RegistroSaidaItens> listarSaidasPorProduto(Long idProduto) {
-        Produto produto = produtoService.atualizarEstoque(idProduto, 0);  // Simples chamada para garantir que o produto existe
+        Produto produto = produtoService.atualizarEstoque(idProduto, 0);  // simples chamada para garantir que o produto existe
         return registroSaidaItensRepository.findByProduto(produto);
     }
 
@@ -48,13 +48,6 @@ public class RegistroSaidaItensService {
                 .orElseThrow(() -> new NoSuchElementException("Registro de saída não encontrado."));
 
         Produto produto = registro.getProduto();
-<<<<<<< HEAD
-        produtoService.adicionarEstoque(produto.getIdProduto(), registro.getQtde());
-
-        registroSaidaItensRepository.delete(registro);
-    }
-
-=======
 
         int novaQuantidadeEstoque = produto.getQuantidadeEstoque() + registro.getQtde();
         if (novaQuantidadeEstoque < 0) {
@@ -65,7 +58,6 @@ public class RegistroSaidaItensService {
     }
 
 
->>>>>>> branch-ortiz
     public RegistroSaidaItens atualizarSaida(Long id, Integer novaQuantidade, String novoMotivo) {
         RegistroSaidaItens registro = registroSaidaItensRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Registro de saída não encontrado."));
